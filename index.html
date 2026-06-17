@@ -1,0 +1,1315 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>在職培訓課程報名 — STUDIO A</title>
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Noto+Sans+TC:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg:        #F4F5F9;
+      --surface:   #FFFFFF;
+      --border:    #E4E6EF;
+      --border-h:  #C8CBE0;
+      --text-1:    #0F1117;
+      --text-2:    #5A5F78;
+      --text-3:    #9B9EBA;
+
+      --c-in-service: #2563EB;
+      --c-in-service-bg: #EEF3FF;
+      --c-senior:     #059669;
+      --c-senior-bg:  #ECFDF5;
+      --c-manager:    #D97706;
+      --c-manager-bg: #FFFBEB;
+      --c-cert:       #7C3AED;
+      --c-cert-bg:    #F5F3FF;
+      --c-3pp:        #0891B2;
+      --c-3pp-bg:     #ECFEFF;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Space Grotesk', 'Noto Sans TC', -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--text-1);
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── Header ── */
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(255,255,255,0.88);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      height: 52px;
+      padding: 0 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .header-brand {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--c-in-service);
+    }
+
+    .header-sep {
+      width: 1px;
+      height: 14px;
+      background: var(--border);
+    }
+
+    .header-title {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-2);
+    }
+
+    .header-link {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--text-2);
+      text-decoration: none;
+      transition: color 0.15s;
+    }
+
+    .header-link:hover { color: var(--c-in-service); }
+
+    /* ── Tabs ── */
+    .tabs-bar {
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      padding: 0 24px;
+      display: flex;
+      overflow-x: auto;
+      scrollbar-width: none;
+      -webkit-overflow-scrolling: touch;
+    }
+    .tabs-bar::-webkit-scrollbar { display: none; }
+
+    .tab-btn {
+      padding: 0 16px;
+      height: 44px;
+      font-size: 12px;
+      font-weight: 600;
+      font-family: 'Space Grotesk', inherit;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: var(--text-3);
+      background: none;
+      border: none;
+      border-bottom: 2px solid transparent;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: color 0.18s, border-color 0.18s;
+    }
+
+    .tab-btn:hover { color: var(--text-1); }
+
+    .tab-btn.active                            { color: var(--text-1);         border-bottom-color: var(--text-1); }
+    .tab-btn.active[data-cat="in-service"]     { color: var(--c-in-service);   border-bottom-color: var(--c-in-service); }
+    .tab-btn.active[data-cat="senior"]         { color: var(--c-senior);       border-bottom-color: var(--c-senior); }
+    .tab-btn.active[data-cat="manager"]        { color: var(--c-manager);      border-bottom-color: var(--c-manager); }
+    .tab-btn.active[data-cat="cert"]           { color: var(--c-cert);         border-bottom-color: var(--c-cert); }
+    .tab-btn.active[data-cat="3pp"]            { color: var(--c-3pp);          border-bottom-color: var(--c-3pp); }
+
+    /* ── Main grid ── */
+    .main {
+      padding: 24px 24px 56px;
+      max-width: 960px;
+      margin: 0 auto;
+    }
+
+    .course-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+    }
+
+    /* ── Card ── */
+    .course-card {
+      background: var(--surface);
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      overflow: hidden;
+      transition: border-color 0.2s, box-shadow 0.2s, transform 0.15s;
+    }
+
+    .course-card:hover {
+      border-color: var(--cat-c);
+      box-shadow: 0 4px 20px rgba(0,0,0,0.07);
+      transform: translateY(-1px);
+    }
+
+    .course-card.hidden { display: none; }
+
+    .course-card[data-category="in-service"] { --cat-c: var(--c-in-service); --cat-bg: var(--c-in-service-bg); }
+    .course-card[data-category="senior"]     { --cat-c: var(--c-senior);     --cat-bg: var(--c-senior-bg); }
+    .course-card[data-category="manager"]    { --cat-c: var(--c-manager);    --cat-bg: var(--c-manager-bg); }
+    .course-card[data-category="cert"]       { --cat-c: var(--c-cert);       --cat-bg: var(--c-cert-bg); }
+    .course-card[data-category="3pp"]        { --cat-c: var(--c-3pp);        --cat-bg: var(--c-3pp-bg); }
+
+    /* 頂部色塊 header */
+    .card-header {
+      background: var(--cat-bg);
+      padding: 14px 16px 12px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .card-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--cat-c);
+      font-family: 'Space Grotesk', sans-serif;
+      margin-bottom: 5px;
+    }
+
+    .card-eyebrow::before {
+      content: '';
+      display: block;
+      width: 5px; height: 5px;
+      border-radius: 50%;
+      background: var(--cat-c);
+      flex-shrink: 0;
+    }
+
+    .card-name {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--text-1);
+      line-height: 1.35;
+      margin-bottom: 3px;
+    }
+
+    .card-audience {
+      font-size: 11px;
+      color: var(--text-2);
+      line-height: 1.65;
+    }
+
+    /* 場次區 */
+    .card-body {
+      padding: 10px 16px 12px;
+    }
+
+    .sessions-divider { display: none; }
+
+    .session-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 0;
+    }
+
+    .session-row + .session-row {
+      border-top: 1px solid var(--bg);
+    }
+
+    .session-date {
+      flex-shrink: 0;
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--text-1);
+      min-width: 48px;
+      font-family: 'Space Grotesk', sans-serif;
+    }
+
+    .session-dow {
+      font-weight: 400;
+      color: var(--text-3);
+    }
+
+    .session-detail {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .session-time {
+      font-size: 11px;
+      color: var(--text-2);
+    }
+
+    .session-loc {
+      font-size: 10px;
+      color: var(--text-3);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .enroll-btn {
+      flex-shrink: 0;
+      font-size: 10px;
+      font-weight: 700;
+      font-family: 'Space Grotesk', sans-serif;
+      padding: 5px 12px;
+      border: none;
+      color: #fff;
+      background: var(--cat-c);
+      border-radius: 4px;
+      cursor: pointer;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      transition: opacity 0.15s, box-shadow 0.15s;
+    }
+
+    .enroll-btn:hover {
+      opacity: 0.85;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.18);
+    }
+
+    /* ── Modal ── */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(15,17,23,0.45);
+      backdrop-filter: blur(3px);
+      z-index: 200;
+      align-items: flex-end;
+      justify-content: center;
+    }
+
+    .modal-overlay.show { display: flex; }
+
+    .modal {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      width: 100%;
+      max-width: 460px;
+      padding: 0 0 32px;
+      border-radius: 14px 14px 0 0;
+      max-height: 92vh;
+      overflow-y: auto;
+    }
+
+    .modal-accent {
+      height: 4px;
+      background: var(--modal-cat-c, var(--c-in-service));
+      border-radius: 14px 14px 0 0;
+      margin-bottom: 24px;
+    }
+
+    .modal-inner { padding: 0 24px; }
+
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 20px;
+    }
+
+    .modal-title {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--text-1);
+      line-height: 1.3;
+      flex: 1;
+      padding-right: 12px;
+    }
+
+    .modal-subtitle {
+      font-size: 12px;
+      color: var(--text-2);
+      margin-top: 4px;
+      line-height: 1.5;
+    }
+
+    .modal-close {
+      width: 28px;
+      height: 28px;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 50%;
+      cursor: pointer;
+      font-size: 13px;
+      color: var(--text-2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      transition: background 0.15s;
+    }
+
+    .modal-close:hover { background: var(--border); }
+
+    .form-group { margin-bottom: 14px; }
+
+    .form-label {
+      display: block;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-3);
+      margin-bottom: 6px;
+      font-family: 'Space Grotesk', sans-serif;
+    }
+
+    .req { color: #E53E3E; }
+
+    .form-input, .form-select, .form-textarea {
+      width: 100%;
+      padding: 10px 12px;
+      border: 1.5px solid var(--border);
+      border-radius: 6px;
+      font-size: 14px;
+      font-family: inherit;
+      color: var(--text-1);
+      background: var(--bg);
+      transition: border-color 0.15s, background 0.15s;
+      -webkit-appearance: none;
+      appearance: none;
+    }
+
+    .form-input::placeholder { color: var(--text-3); }
+
+    .form-input:focus, .form-select:focus, .form-textarea:focus {
+      outline: none;
+      border-color: var(--c-in-service);
+      background: #fff;
+    }
+
+    .form-textarea { resize: vertical; min-height: 70px; }
+
+    .submit-btn {
+      width: 100%;
+      padding: 13px;
+      background: var(--c-in-service);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 700;
+      font-family: 'Space Grotesk', sans-serif;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      cursor: pointer;
+      margin-top: 6px;
+      transition: opacity 0.15s, box-shadow 0.15s;
+    }
+
+    .submit-btn:hover   { opacity: 0.88; box-shadow: 0 4px 16px rgba(37,99,235,0.3); }
+    .submit-btn:disabled { opacity: 0.35; cursor: not-allowed; }
+
+    /* ── Success ── */
+    .success-view {
+      display: none;
+      text-align: center;
+      padding: 8px 0 4px;
+    }
+
+    .success-icon {
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      background: var(--c-senior-bg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 14px;
+    }
+
+    .success-icon svg {
+      width: 22px;
+      height: 22px;
+      stroke: var(--c-senior);
+      stroke-width: 2.5;
+      fill: none;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .success-view h3 { font-size: 16px; font-weight: 700; margin-bottom: 8px; }
+
+    .success-view p {
+      font-size: 13px;
+      color: var(--text-2);
+      line-height: 1.7;
+    }
+
+    .success-view a { color: var(--c-in-service); }
+
+    .success-close {
+      margin-top: 20px;
+      padding: 10px 28px;
+      background: var(--bg);
+      color: var(--text-1);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      font-size: 13px;
+      font-weight: 600;
+      font-family: inherit;
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+
+    .success-close:hover { background: var(--border); }
+
+    /* ── Empty state ── */
+    .empty-state {
+      display: none;
+      text-align: center;
+      padding: 64px 20px;
+      font-size: 13px;
+      color: var(--text-3);
+      letter-spacing: 0.03em;
+    }
+
+    /* ── 日曆 ── */
+    .calendar-view { display: none; flex-direction: column; gap: 16px; }
+    .calendar-view.show { display: flex; }
+
+    .cal-month {
+      background: var(--surface);
+      border-radius: 12px;
+      box-shadow: 0 1px 6px rgba(0,0,0,0.08);
+      overflow: hidden;
+    }
+
+    .cal-month-header {
+      padding: 14px 18px 12px;
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--text-1);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .cal-grid-5 {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+    }
+
+    .cal-dow {
+      text-align: center;
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--text-3);
+      padding: 8px 0;
+      border-bottom: 1px solid var(--border);
+      border-right: 1px solid var(--border);
+    }
+
+    .cal-dow:last-child { border-right: none; }
+
+    .cal-day {
+      min-height: 100px;
+      padding: 8px 8px 6px;
+      border-right: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .cal-day:nth-child(5n) { border-right: none; }
+    .cal-day-empty { background: #FAFAF9; }
+
+    .cal-day-num {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-3);
+      margin-bottom: 5px;
+      font-family: 'Space Grotesk', sans-serif;
+    }
+
+    .cal-today .cal-day-num {
+      color: var(--c-in-service);
+      font-weight: 700;
+    }
+
+    .cal-event {
+      font-size: 11px;
+      padding: 4px 7px;
+      border-radius: 4px;
+      margin-bottom: 3px;
+      display: block;
+      line-height: 1.4;
+    }
+
+    .cal-event-reg { cursor: pointer; }
+    .cal-event-reg:hover { opacity: 0.8; }
+
+    .cal-event-name { font-weight: 600; }
+    .cal-event-time { font-size: 10px; margin-top: 1px; opacity: 0.75; }
+
+    .cal-event-in-service { background: #DBEAFE; color: #1D4ED8; }
+    .cal-event-senior     { background: #D1FAE5; color: #065F46; }
+    .cal-event-manager    { background: #FEF3C7; color: #92400E; }
+    .cal-event-cert       { background: #EDE9FE; color: #5B21B6; }
+    .cal-event-3pp        { background: #CFFAFE; color: #0E7490; }
+    .cal-event-info       { background: #F1F5F9; color: #64748B; }
+
+    /* ── 建議名單 ── */
+    .recommend-view {
+      display: none;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+    }
+
+    .recommend-view.show { display: grid; }
+
+    .rec-notice {
+      grid-column: 1 / -1;
+      font-size: 11px;
+      color: var(--text-3);
+      margin-bottom: 16px;
+      padding: 8px 12px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+    }
+
+    .rec-group {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      margin-bottom: 12px;
+      overflow: hidden;
+      transition: border-color 0.2s;
+    }
+
+    .rec-group:hover { border-color: var(--border-h); }
+
+    .rec-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 18px 12px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .rec-course-eyebrow {
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--rec-cat-c, var(--text-3));
+      margin-bottom: 2px;
+      font-family: 'Space Grotesk', sans-serif;
+    }
+
+    .rec-course-name {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--text-1);
+    }
+
+    .rec-count {
+      font-size: 10px;
+      font-weight: 700;
+      color: var(--rec-cat-c, var(--text-3));
+      background: color-mix(in srgb, var(--rec-cat-c, #ccc) 12%, white);
+      padding: 3px 9px;
+      border-radius: 20px;
+      font-family: 'Space Grotesk', sans-serif;
+    }
+
+    .rec-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 9px 18px;
+      font-size: 13px;
+    }
+
+    .rec-row + .rec-row { border-top: 1px solid var(--bg); }
+
+    .rec-region-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      color: var(--rec-cat-c, var(--text-3));
+      padding: 10px 18px 2px;
+      border-top: 1px solid var(--border);
+    }
+
+    .rec-store  { color: var(--text-1); font-weight: 500; min-width: 80px; }
+    .rec-id     { color: var(--text-3); font-size: 11px; min-width: 56px; font-family: 'Space Grotesk', sans-serif; letter-spacing: 0.04em; }
+    .rec-name   { color: var(--text-2); flex: 1; }
+    .rec-prereq { font-size: 10px; font-weight: 600; color: #D97706; background: #FFFBEB; border: 1px solid #FDE68A; border-radius: 4px; padding: 2px 6px; white-space: nowrap; }
+
+    /* ── Responsive ── */
+    @media (max-width: 640px) {
+      .main          { padding: 16px 14px 48px; }
+      .site-header   { padding: 0 16px; }
+      .tabs-bar      { padding: 0 12px; }
+      .course-grid, .recommend-view { grid-template-columns: 1fr; }
+      .modal         { border-radius: 14px 14px 0 0; }
+    }
+
+    @media (min-width: 641px) {
+      .modal-overlay { align-items: center; }
+      .modal         { border-radius: 12px; }
+    }
+
+    /* ── Radio 場次選擇 ── */
+    .session-radio-row {
+      cursor: pointer;
+      border-radius: 6px;
+      transition: background 0.15s;
+      padding: 6px 6px;
+      margin: 0 -6px;
+    }
+
+    .session-radio-row:hover { background: var(--bg); }
+
+    .session-radio {
+      flex-shrink: 0;
+      width: 15px;
+      height: 15px;
+      accent-color: var(--cat-c);
+      cursor: pointer;
+    }
+
+    /* 選中的那列加底色 */
+    .session-radio:checked + .session-date {
+      color: var(--cat-c);
+    }
+
+    /* ── 多場次底部報名按鈕 ── */
+    .card-footer {
+      padding: 10px 16px 4px;
+      border-top: 1px solid var(--border);
+    }
+
+    .enroll-btn-full {
+      width: 100%;
+      padding: 8px 12px;
+      font-size: 11px;
+      border-radius: 6px;
+      justify-content: center;
+    }
+
+  </style>
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="header-left">
+      <span class="header-brand">Studio A</span>
+      <div class="header-sep"></div>
+      <span class="header-title">在職培訓課程報名</span>
+    </div>
+    <a class="header-link" id="sheetsLink" href="#" target="_blank">
+      查閱報名名單
+      <svg width="11" height="11" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M2 10 L10 2"/><path d="M5 2 H10 V7"/>
+      </svg>
+    </a>
+  </header>
+
+  <nav class="tabs-bar">
+    <button class="tab-btn active" data-cat="all"        onclick="filterTab('all',this)">日曆</button>
+    <button class="tab-btn"        data-cat="in-service" onclick="filterTab('in-service',this)">每月課程</button>
+    <button class="tab-btn"        data-cat="senior"     onclick="filterTab('senior',this)">資深課程</button>
+    <button class="tab-btn"        data-cat="manager"    onclick="filterTab('manager',this)">店長課程</button>
+    <button class="tab-btn"        data-cat="cert"       onclick="filterTab('cert',this)">原廠檢定</button>
+    <button class="tab-btn"        data-cat="3pp"        onclick="filterTab('3pp',this)">3PP</button>
+    <div style="width:1px;background:var(--border);margin:10px 4px;flex-shrink:0"></div>
+    <button class="tab-btn"        data-cat="recommend"  onclick="filterTab('recommend',this)">建議名單</button>
+  </nav>
+
+  <main class="main">
+    <div class="calendar-view" id="calendarView"></div>
+    <div class="course-grid" id="courseGrid"></div>
+    <div class="empty-state" id="emptyState">目前沒有開放報名的課程</div>
+    <div class="recommend-view" id="recommendView"></div>
+  </main>
+
+  <!-- Modal -->
+  <div class="modal-overlay" id="modalOverlay">
+    <div class="modal" id="modalBox">
+      <div class="modal-accent" id="modalAccent"></div>
+      <div class="modal-inner">
+
+        <!-- Form -->
+        <div id="formView">
+          <div class="modal-header">
+            <div>
+              <div class="modal-title"   id="modalCourse"></div>
+              <div class="modal-subtitle" id="modalSession"></div>
+            </div>
+            <button class="modal-close" onclick="closeModal()">&#x2715;</button>
+          </div>
+
+          <form id="enrollForm">
+            <div class="form-group">
+              <label class="form-label">門市名稱 <span class="req">*</span></label>
+              <select class="form-select" id="fieldStore" required>
+                <option value="" disabled selected>請選擇門市</option>
+                <optgroup label="北一區">
+                  <option>士林</option>
+                  <option>大葉高島屋</option>
+                  <option>阿波羅</option>
+                  <option>美麗華</option>
+                  <option>微風</option>
+                  <option>羅東</option>
+                </optgroup>
+                <optgroup label="北二區">
+                  <option>永和</option>
+                  <option>板橋誠品</option>
+                  <option>板橋遠百</option>
+                  <option>花蓮</option>
+                  <option>新西門</option>
+                  <option>新店裕隆城</option>
+                  <option>新莊宏匯</option>
+                </optgroup>
+                <optgroup label="桃竹區">
+                  <option>中壢大江</option>
+                  <option>竹北遠百</option>
+                  <option>苗栗尚順</option>
+                  <option>桃園台茂</option>
+                  <option>桃園統領</option>
+                  <option>新竹中正</option>
+                  <option>新竹光復</option>
+                  <option>新竹遠百</option>
+                </optgroup>
+                <optgroup label="中區">
+                  <option>台中中科</option>
+                  <option>台中金典</option>
+                  <option>台中精誠</option>
+                  <option>台中豐原</option>
+                  <option>台中麗寶</option>
+                  <option>彩虹台中</option>
+                </optgroup>
+                <optgroup label="南區">
+                  <option>大立</option>
+                  <option>大億西門</option>
+                  <option>高雄三多</option>
+                  <option>高雄岡山</option>
+                  <option>夢時代</option>
+                </optgroup>
+                <optgroup label="校園店">
+                  <option>中央大學</option>
+                  <option>中教大學</option>
+                  <option>中興大學</option>
+                  <option>台北大學</option>
+                  <option>成功大學</option>
+                  <option>亞洲大學</option>
+                  <option>東海大學</option>
+                  <option>政治大學</option>
+                  <option>海洋大學</option>
+                  <option>高科大學</option>
+                  <option>高師大學</option>
+                  <option>淡江大學</option>
+                  <option>清華大學</option>
+                  <option>逢甲大學</option>
+                  <option>臺灣大學</option>
+                  <option>輔仁大學</option>
+                </optgroup>
+                <optgroup label="各區維修中心（前台）">
+                  <option>台中公益</option>
+                  <option>八德</option>
+                </optgroup>
+                <optgroup label="各區維修中心（工程師）">
+                  <option>士林維修中心</option>
+                  <option>台中精誠維修中心</option>
+                  <option>台中維修中心</option>
+                  <option>台中VA Repair</option>
+                  <option>台南維修中心</option>
+                  <option>花蓮維修中心</option>
+                  <option>高雄維修中心</option>
+                  <option>新竹維修中心</option>
+                  <option>羅東維修中心</option>
+                  <option>八德維修中心</option>
+                </optgroup>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label">員工編號 <span class="req">*</span></label>
+              <input type="text" class="form-input" id="fieldEmployeeId" placeholder="e.g. SA1234" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label">英文姓名 <span class="req">*</span></label>
+              <input type="text" class="form-input" id="fieldName" placeholder="e.g. Peggy Ho" required>
+            </div>
+            <div class="form-group" id="sessionSelectGroup" style="display:none">
+              <label class="form-label">場次 <span class="req">*</span></label>
+              <select class="form-select" id="fieldSession"></select>
+            </div>
+            <div class="form-group" id="certTypeGroup" style="display:none">
+              <label class="form-label">檢定項目 <span class="req">*</span></label>
+              <select class="form-select" id="fieldCertType">
+                <option value="" disabled selected>請選擇</option>
+                <option value="iOS Expert 檢定">iOS Expert 檢定</option>
+                <option value="Mac Specialist 檢定">Mac Specialist 檢定</option>
+              </select>
+            </div>
+            <button type="submit" class="submit-btn" id="submitBtn">確認報名</button>
+          </form>
+        </div>
+
+        <!-- Success -->
+        <div class="success-view" id="successView">
+          <div class="success-icon">
+            <svg viewBox="0 0 24 24"><polyline points="4 12 10 18 20 6"/></svg>
+          </div>
+          <h3>報名完成</h3>
+          <p>已收到您的報名資料。<br>
+             可至 <a id="successSheetsLink" href="#" target="_blank">報名名單</a> 查詢確認。</p>
+          <button class="success-close" onclick="closeModal()">關閉</button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // ── 設定 ──
+    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbztWewcnCcX5IDnLyi6vyZS2x9w-lqiF65BE0pFMk8t0zwoXX4UsOLqQXgQaZOyhtk/exec';
+    const SHEETS_URL = 'https://docs.google.com/spreadsheets/d/18T6G52SFlTUHid3IPW-2kAdFAsUL0PGHN_ETtZDAhJM/edit?usp=sharing';
+
+    document.getElementById('sheetsLink').href        = SHEETS_URL;
+    document.getElementById('successSheetsLink').href = SHEETS_URL;
+
+    const CAT_LABEL = {
+      'in-service': '每月課程',
+      'senior':     '資深課程',
+      'manager':    '店長課程',
+      'cert':       '原廠檢定',
+      '3pp':        '3PP'
+    };
+
+    const CAT_COLOR = {
+      'in-service': '#2563EB',
+      'senior':     '#059669',
+      'manager':    '#B45309',
+      'cert':       '#7C3AED',
+      '3pp':        '#0891B2'
+    };
+
+    // ── 課程資料 ──
+    const COURSES = [
+      {
+        id: 'arpedia-0714', category: '3pp',
+        name: 'ARpedia《Into the Great Lives》新系列教育訓練',
+        audience: '全門市與校園門市，請至少派一名夥伴參加\n會員經營部，請主管指派夥伴參加',
+        sessions: [
+          { id: '7/14', date: '7/14', dow: '二', time: '14:00–15:00', loc: '', tag: '' }
+        ]
+      },
+      {
+        id: 'store-ops', category: 'in-service',
+        name: '店務課程',
+        audience: '需通過儲備幹部考核',
+        sessions: [
+          { id: '7/17',    date: '7/17',    dow: '五', time: '09:30–12:00', loc: '' }
+        ]
+      },
+      {
+        id: 'customer-service', category: 'in-service',
+        name: '客服入門',
+        audience: '需通過新人考核 M1',
+        sessions: [
+          { id: '7/23',    date: '7/23',    dow: '四', time: '14:00–16:00', loc: '' }
+        ]
+      },
+      {
+        id: 'repair', category: 'in-service',
+        name: '維修收取件',
+        audience: '需通過新人考核 M2',
+        sessions: [
+          { id: '7/24',    date: '7/24',    dow: '五', time: '14:00–16:00', loc: '' }
+        ]
+      },
+      {
+        id: 'senior-sales', category: 'senior',
+        name: '銷售框架 × 實戰演練 — 2026 年資深顧問培訓課程',
+        audience: '各門市指派 1 位代表，以資深銷售顧問為主\n若無符合者，可由儲備幹部或店長代替',
+        sessions: [
+          { id: '南區-7/16', date: '7/16', dow: '四', time: '13:00–17:00', loc: '高雄三多四樓', tag: '【南區場次】' },
+          { id: '中區-7/17', date: '7/17', dow: '五', time: '13:00–17:00', loc: 'WORK HUB 智能商務空間－台中世基 B 館', tag: '【中區場次】' },
+          { id: '北區-7/22', date: '7/22', dow: '三', time: '13:00–17:00', loc: '中影八德大樓（台北）', tag: '【北區場次】' }
+        ]
+      },
+      {
+        id: 'manager-course', category: 'manager',
+        name: '化解衝突 × 從容應對 — 2026 年店長培訓課程',
+        audience: '各區門市店長\n如當天無法出席，請安排儲幹代理',
+        sessions: [
+          { id: '南區-8/10', date: '8/10', dow: '一', time: '09:30–16:30', loc: 'WORK HUB 高雄光華 B 館', tag: '【南區場次】' },
+          { id: '北區-8/13', date: '8/13', dow: '四', time: '09:30–16:30', loc: '中影八德大樓（台北）', tag: '【北區場次】' }
+        ]
+      },
+      {
+        id: 'cert', category: 'cert',
+        name: 'iOS Expert + Mac Specialist 檢定',
+        audience: '資格符合者（詳見課程建議）',
+        sessions: [
+          { id: '南區-8/3',   date: '8/3',  dow: '一', time: '14:00–16:30', loc: '高雄三多會議室',  tag: '【南區下午場】' },
+          { id: '北區早-8/6', date: '8/6',  dow: '四', time: '10:00–12:00', loc: '總公司台北教室',  tag: '【北區上午場】' },
+          { id: '北區午-8/6', date: '8/6',  dow: '四', time: '14:00–16:30', loc: '總公司台北教室',  tag: '【北區下午場】' }
+        ]
+      }
+    ];
+
+    // ── 渲染 ──
+    function renderCourses() {
+      const grid = document.getElementById('courseGrid');
+      COURSES.forEach(c => {
+        const rows = c.sessions.map((s, i) => `
+          <label class="session-row session-radio-row">
+            <input type="radio" name="session-${c.id}" value="${s.id}" ${i === 0 ? 'checked' : ''} class="session-radio">
+            <div class="session-date">${s.date}<span class="session-dow">（${s.dow}）</span></div>
+            <div class="session-detail">
+              <div class="session-time">${s.tag ? s.tag + '　' : ''}${s.time}</div>
+              ${s.loc ? `<div class="session-loc">${s.loc}</div>` : ''}
+            </div>
+          </label>
+        `).join('');
+
+        const card = document.createElement('div');
+        card.className        = 'course-card';
+        card.dataset.category = c.category;
+        card.innerHTML = `
+          <div class="card-header">
+            <div class="card-eyebrow">${CAT_LABEL[c.category]}</div>
+            <div class="card-name">${c.name}</div>
+            <div class="card-audience">${c.audience.replace(/\n/g, '<br>')}</div>
+          </div>
+          <div class="card-body">
+            ${rows}
+          </div>
+          <div class="card-footer">
+            <button class="enroll-btn enroll-btn-full" onclick="openModalFromRadio('${c.id}')">報名</button>
+          </div>
+        `;
+        grid.appendChild(card);
+      });
+    }
+
+    // ── 建議名單假資料（之後替換成真實資料）──
+    const RECOMMENDATIONS = [
+      {
+        course: "客服入門",
+        category: 'in-service',
+        people: [
+          { region: "北二區", store: "板橋遠百", id: 'SA3301', name: "Yunwan" },
+          { region: "北二區", store: "板橋遠百", id: 'SA3314', name: "Vincent" },
+          { region: "桃竹區", store: "中壢大江", id: 'SA3272', name: "Stewart" },
+          { region: "桃竹區", store: "苗栗尚順", id: 'SA3310', name: "Tracy" },
+          { region: "桃竹區", store: "新竹遠百", id: 'SA3315', name: "Kelvin" },
+          { region: "南區",   store: "高雄三多", id: 'SA3237', name: "Jerry" },
+          { region: "校園店", store: "成功大學", id: 'SA3311', name: "Lily" },
+        ]
+      },
+      {
+        course: "維修收取件",
+        category: 'in-service',
+        people: [
+          { region: "北二區", store: "永和",   id: 'SA3283', name: "Jamie" },
+          { region: "桃竹區", store: "中壢大江", id: 'SA3272', name: "Stewart" },
+          { region: "桃竹區", store: "新竹遠百", id: 'SA3277', name: "Yu-Hung" },
+          { region: "中區",   store: "台中金典", id: 'SA3296', name: "Kelly" },
+        ]
+      },
+      {
+        course: "iOS Expert 檢定",
+        category: 'cert',
+        prereqNote: "iOS 銷售技巧未完成",
+        people: [
+          { region: "北一區", store: "大葉高島屋", id: 'SA3276', name: "Steven",   prereq: false },
+          { region: "北一區", store: "阿波羅",     id: 'SA3148', name: "Justin",   prereq: false },
+          { region: "北一區", store: "美麗華",     id: 'SA3164', name: "Zoe",      prereq: false },
+          { region: "北一區", store: "美麗華",     id: 'SA2497', name: "Chou Yan", prereq: false },
+          { region: "北二區", store: "花蓮",       id: 'SA3004', name: "Yu",       prereq: false },
+          { region: "北二區", store: "新店裕隆城", id: 'SA3243', name: "Hsuan",    prereq: false },
+          { region: "桃竹區", store: "桃園台茂",   id: 'SA3269', name: "Yao-yao",  prereq: true },
+          { region: "桃竹區", store: "桃園統領",   id: 'SA3281', name: "Kevin",    prereq: false },
+          { region: "中區",   store: "台中金典",   id: 'SA3097', name: "Tommy",    prereq: true },
+          { region: "中區",   store: "台中豐原",   id: 'SA3215', name: "Oreo",     prereq: false },
+          { region: "中區",   store: "彩虹台中",   id: 'SA2754', name: "Lizzy",    prereq: false },
+          { region: "南區",   store: "大億西門",   id: 'SA3263', name: "Jeff",     prereq: false },
+          { region: "南區",   store: "大億西門",   id: 'SA3266', name: "Liam",     prereq: false },
+          { region: "南區",   store: "高雄三多",   id: 'SA3244', name: "Ying",     prereq: true },
+          { region: "南區",   store: "高雄岡山",   id: 'SA3202', name: "Wayne",    prereq: true },
+          { region: "南區",   store: "夢時代",     id: 'SA2846', name: "Dada",     prereq: true },
+          { region: "校園店", store: "成功大學",   id: 'SA3059', name: "Anna",     prereq: false },
+          { region: "校園店", store: "亞洲大學",   id: 'SA3084', name: "Jerry",    prereq: false },
+          { region: "校園店", store: "海洋大學",   id: 'SA3234', name: "Sharon",   prereq: false },
+          { region: "校園店", store: "高師大學",   id: 'SA2992', name: "Willson",  prereq: true },
+          { region: "校園店", store: "臺灣大學",   id: 'SA2106', name: "PJ",       prereq: false },
+        ]
+      },
+      {
+        course: "Mac Specialist 檢定",
+        category: 'cert',
+        prereqNote: "Mac 銷售技巧未完成",
+        people: [
+          { region: "北一區", store: "微風",     id: 'SA2391', name: "Nick",    prereq: true  },
+          { region: "北二區", store: "板橋遠百", id: 'SA2962', name: "Lulu",    prereq: false },
+          { region: "桃竹區", store: "桃園台茂", id: 'SA3175', name: "William", prereq: true  },
+          { region: "南區",   store: "夢時代",   id: 'SA2618', name: "Vic",     prereq: true  },
+        ]
+      },
+    ];
+
+    const REGION_ORDER = ['北一區', '北二區', '桃竹區', '中區', '南區', '校園店'];
+
+    function renderRecommendations() {
+      const view = document.getElementById('recommendView');
+      view.innerHTML = `<p class="rec-notice">以下名單由培訓記錄自動產出（2026/06/10 版本）。</p>`;
+      RECOMMENDATIONS.forEach(g => {
+        const color = CAT_COLOR[g.category];
+
+        // 依區域分組
+        const byRegion = {};
+        g.people.forEach(p => {
+          if (!byRegion[p.region]) byRegion[p.region] = [];
+          byRegion[p.region].push(p);
+        });
+        const regions = REGION_ORDER.filter(r => byRegion[r]);
+        Object.keys(byRegion).forEach(r => { if (!regions.includes(r)) regions.push(r); });
+
+        const rows = regions.map(region => `
+          <div class="rec-region-label">${region}</div>
+          ${byRegion[region].map(p => `
+            <div class="rec-row">
+              <span class="rec-store">${p.store}</span>
+              <span class="rec-id">${p.id}</span>
+              <span class="rec-name">${p.name}</span>
+              ${p.prereq === false && g.prereqNote ? `<span class="rec-prereq">${g.prereqNote}</span>` : ''}
+            </div>
+          `).join('')}
+        `).join('');
+        const block = document.createElement('div');
+        block.className = 'rec-group';
+        block.style.setProperty('--rec-cat-c', color);
+        block.innerHTML = `
+          <div class="rec-header">
+            <div>
+              <div class="rec-course-eyebrow">${CAT_LABEL[g.category]}</div>
+              <div class="rec-course-name">${g.course}</div>
+            </div>
+            <span class="rec-count">${g.people.length} 人</span>
+          </div>
+          ${rows}
+        `;
+        view.appendChild(block);
+      });
+    }
+
+    // ── 不用報名的課程（僅顯示用）──
+    const INFO_EVENTS = [
+      { date: '2026-07-01', name: '新人到職 Day 1', time: '10:30–15:30' },
+      { date: '2026-07-02', name: '新人到職 Day 2', time: '10:30–15:30' },
+      { date: '2026-07-03', name: '新人到職 Day 3', time: '10:30–15:30' },
+      { date: '2026-07-07', name: '新人到職 Day 4', time: '10:30–15:30' },
+      { date: '2026-07-08', name: '新人到職 Day 5', time: '10:30–12:30' },
+      { date: '2026-07-23', name: '新人考核 – 筆試', time: '09:30–10:30' },
+      { date: '2026-07-23', name: '晉升考核 – 筆試', time: '10:30–11:30' },
+      { date: '2026-07-28', name: 'iOS Expert 衝刺班 Day 1', time: '依信件通知' },
+      { date: '2026-07-29', name: 'iOS Expert 衝刺班 Day 2', time: '依信件通知' },
+      { date: '2026-07-30', name: 'Mac Specialist 衝刺班 Day 1', time: '依信件通知' },
+      { date: '2026-07-31', name: 'Mac Specialist 衝刺班 Day 2', time: '依信件通知' },
+    ];
+
+    // ── 日曆渲染 ──
+    function renderCalendar() {
+      const view = document.getElementById('calendarView');
+      const eventMap = {};
+
+      // 可報名課程
+      COURSES.forEach(c => {
+        c.sessions.forEach(s => {
+          const parts = s.date.replace(/–.*/, '').split('/');
+          const m = parts[0].trim(), d = parts[1] ? parts[1].trim() : null;
+          if (!d) return;
+          const key = `2026-${m.padStart(2,'0')}-${d.padStart(2,'0')}`;
+          if (!eventMap[key]) eventMap[key] = [];
+          const name  = c.name;
+          const tag   = s.tag ? `【${s.tag.replace(/【|】/g, '')}】` : '';
+          eventMap[key].push({ name, tag, time: s.time, cat: c.category, canReg: true, cid: c.id, sid: s.id });
+        });
+      });
+
+      // 不用報名的課程
+      INFO_EVENTS.forEach(e => {
+        if (!eventMap[e.date]) eventMap[e.date] = [];
+        eventMap[e.date].push({ name: e.name, tag: '', time: e.time, cat: 'info', canReg: false });
+      });
+
+      view.innerHTML = '';
+      [7, 8].forEach(m => {
+        const lastDay = new Date(2026, m, 0);
+
+        // 找到包含1日的那週的週一
+        const firstDay = new Date(2026, m - 1, 1);
+        const dow = firstDay.getDay();
+        const gridStart = new Date(firstDay);
+        gridStart.setDate(gridStart.getDate() - (dow === 0 ? 6 : dow - 1));
+
+        let html = `<div class="cal-month">
+          <div class="cal-month-header">2026 年 ${m} 月</div>
+          <div class="cal-grid-5">
+            ${['星期一','星期二','星期三','星期四','星期五'].map(d => `<div class="cal-dow">${d}</div>`).join('')}`;
+
+        let week = new Date(gridStart);
+        while (week <= lastDay) {
+          for (let wd = 0; wd < 5; wd++) {
+            const day = new Date(week);
+            day.setDate(day.getDate() + wd);
+            const inMonth = day.getMonth() + 1 === m;
+            if (!inMonth) {
+              html += `<div class="cal-day cal-day-empty"></div>`;
+              continue;
+            }
+            const key = `2026-${String(m).padStart(2,'0')}-${String(day.getDate()).padStart(2,'0')}`;
+            const events = eventMap[key] || [];
+            const isToday = new Date().toDateString() === day.toDateString();
+            const chips = events.map(e => {
+              const cls = `cal-event cal-event-${e.cat}${e.canReg ? ' cal-event-reg' : ''}`;
+              const click = e.canReg ? `onclick="openModal('${e.cid}','${e.sid}')"` : '';
+              return `<div class="${cls}" ${click}>
+                <div class="cal-event-name">${e.name}${e.tag ? '<br>' + e.tag : ''}</div>
+                <div class="cal-event-time">${e.time}</div>
+              </div>`;
+            }).join('');
+            html += `<div class="cal-day${isToday ? ' cal-today' : ''}">
+              <div class="cal-day-num">${day.getDate()}</div>${chips}
+            </div>`;
+          }
+          week.setDate(week.getDate() + 7);
+        }
+
+        html += `</div></div>`;
+        view.innerHTML += html;
+      });
+    }
+
+    // ── Tab 篩選 ──
+    function filterTab(cat, btn) {
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+
+      const isCal = cat === 'all';
+      const isRec = cat === 'recommend';
+
+      document.getElementById('calendarView').classList.toggle('show', isCal);
+      document.getElementById('recommendView').classList.toggle('show', isRec);
+
+      let n = 0;
+      document.querySelectorAll('.course-card').forEach(card => {
+        const show = !isCal && !isRec && card.dataset.category === cat;
+        card.classList.toggle('hidden', !show);
+        if (show) n++;
+      });
+      document.getElementById('emptyState').style.display = (!isCal && !isRec && n === 0) ? 'block' : 'none';
+    }
+
+    // ── Modal ──
+    let activeCourse = null, activeSession = null;
+
+    function openModalFromRadio(courseId) {
+      const selected = document.querySelector(`input[name="session-${courseId}"]:checked`);
+      if (!selected) return;
+      openModal(courseId, selected.value);
+    }
+
+    function openModal(courseId, sessionId) {
+      activeCourse  = COURSES.find(c => c.id === courseId);
+      activeSession = activeCourse.sessions.find(s => s.id === sessionId);
+
+      document.getElementById('modalCourse').textContent  = activeCourse.name;
+      document.getElementById('modalSession').textContent =
+        `${activeSession.date}（${activeSession.dow}）　${activeSession.time}${activeSession.loc ? '　' + activeSession.loc : ''}`;
+
+      document.getElementById('modalAccent').style.background = CAT_COLOR[activeCourse.category];
+
+      // 場次選單一律隱藏（已在卡片上選好）
+      document.getElementById('sessionSelectGroup').style.display = 'none';
+
+      const isCert = activeCourse.category === 'cert';
+      const certGroup = document.getElementById('certTypeGroup');
+      certGroup.style.display = isCert ? 'block' : 'none';
+      document.getElementById('fieldCertType').required = isCert;
+
+      document.getElementById('formView').style.display    = 'block';
+      document.getElementById('successView').style.display = 'none';
+      document.getElementById('enrollForm').reset();
+      document.getElementById('modalOverlay').classList.add('show');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeModal() {
+      document.getElementById('modalOverlay').classList.remove('show');
+      document.body.style.overflow = '';
+    }
+
+    document.getElementById('modalOverlay').addEventListener('click', e => {
+      if (e.target === document.getElementById('modalOverlay')) closeModal();
+    });
+
+    // ── 送出 ──
+    document.getElementById('enrollForm').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      const btn = document.getElementById('submitBtn');
+      btn.disabled = true;
+      btn.textContent = '送出中…';
+
+      const chosen = activeSession;
+
+      const monthNum    = String(chosen.date).split('/')[0];
+      const sessionMonth = `${new Date().getFullYear()}-${String(monthNum).padStart(2, '0')}`;
+
+      const payload = {
+        course:        activeCourse.name,
+        category:      activeCourse.category,
+        sessionMonth:  sessionMonth,
+        session:       `${chosen.date}（${chosen.dow}）　${chosen.time}${chosen.tag ? '　' + chosen.tag : (chosen.loc ? '　' + chosen.loc : '')}`,
+        certType:      activeCourse.category === 'cert' ? document.getElementById('fieldCertType').value : '',
+        store:         document.getElementById('fieldStore').value,
+        employeeId:    document.getElementById('fieldEmployeeId').value.trim(),
+        name:          document.getElementById('fieldName').value.trim()
+      };
+
+      try {
+        await fetch(SCRIPT_URL, {
+          method: 'POST', mode: 'no-cors',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+        document.getElementById('formView').style.display    = 'none';
+        document.getElementById('successView').style.display = 'block';
+      } catch {
+        alert('送出失敗，請稍後再試。');
+      } finally {
+        btn.disabled    = false;
+        btn.textContent = '確認報名';
+      }
+    });
+
+    renderCourses();
+    renderRecommendations();
+    renderCalendar();
+    // 預設顯示日曆，隱藏所有課程卡片
+    document.getElementById('calendarView').classList.add('show');
+    document.querySelectorAll('.course-card').forEach(card => card.classList.add('hidden'));
+  </script>
+
+</body>
+</html>
