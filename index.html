@@ -398,6 +398,32 @@
 
     .form-textarea { resize: vertical; min-height: 70px; }
 
+    .diet-options {
+      display: flex;
+      gap: 10px;
+    }
+    .diet-option {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      padding: 10px;
+      border: 1.5px solid var(--border);
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 14px;
+      transition: border-color 0.15s, background 0.15s;
+      user-select: none;
+    }
+    .diet-option:has(input:checked) {
+      border-color: var(--c-manager);
+      background: var(--c-manager-bg);
+      color: var(--c-manager);
+      font-weight: 600;
+    }
+    .diet-option input { display: none; }
+
     .submit-btn {
       width: 100%;
       padding: 13px;
@@ -723,12 +749,11 @@
   </header>
 
   <nav class="tabs-bar">
-    <button class="tab-btn active" data-cat="all"        onclick="filterTab('all',this)">日曆</button>
+    <button class="tab-btn active" data-cat="all"        onclick="filterTab('all',this)">總覽</button>
     <button class="tab-btn"        data-cat="in-service" onclick="filterTab('in-service',this)">每月課程</button>
     <button class="tab-btn"        data-cat="senior"     onclick="filterTab('senior',this)">資深課程</button>
     <button class="tab-btn"        data-cat="manager"    onclick="filterTab('manager',this)">店長課程</button>
     <button class="tab-btn"        data-cat="cert"       onclick="filterTab('cert',this)">原廠檢定</button>
-    <button class="tab-btn"        data-cat="3pp"        onclick="filterTab('3pp',this)">3PP</button>
     <div style="width:1px;background:var(--border);margin:10px 4px;flex-shrink:0"></div>
     <button class="tab-btn"        data-cat="recommend"  onclick="filterTab('recommend',this)">建議名單</button>
   </nav>
@@ -859,6 +884,21 @@
                 <option value="Mac Specialist 檢定">Mac Specialist 檢定</option>
               </select>
             </div>
+            <div class="form-group" id="dietGroup" style="display:none">
+              <label class="form-label">飲食習慣 <span class="req">*</span></label>
+              <div class="diet-options">
+                <label class="diet-option">
+                  <input type="radio" name="diet" value="葷"> 葷食
+                </label>
+                <label class="diet-option">
+                  <input type="radio" name="diet" value="素"> 素食
+                </label>
+              </div>
+            </div>
+            <div class="form-group" id="allergyGroup" style="display:none">
+              <label class="form-label">食物過敏來源（選填）</label>
+              <input type="text" class="form-input" id="fieldAllergy" placeholder="如有請填寫，例如：花生、海鮮">
+            </div>
             <button type="submit" class="submit-btn" id="submitBtn">確認報名</button>
           </form>
         </div>
@@ -880,7 +920,7 @@
 
   <script>
     // ── 設定 ──
-    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxjsN2gDQ83h3UdHeAJjblB5S__nE5CxAyEbjjAFiqWqxh7LfXHKeRDVX6kNDFLbu2I/exec';
+    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbw3HcIg6mwteeNcKtERoDWCx-ppuyJ6eFuiLYqBSoquX_8dp6MGx-9OPvPlvEc9VNwV/exec';
     const SHEETS_URL = 'https://docs.google.com/spreadsheets/d/18T6G52SFlTUHid3IPW-2kAdFAsUL0PGHN_ETtZDAhJM/edit?usp=sharing';
 
     document.getElementById('sheetsLink').href        = SHEETS_URL;
@@ -905,11 +945,11 @@
     // ── 課程資料 ──
     const COURSES = [
       {
-        id: 'arpedia-0714', category: '3pp',
-        name: 'ARpedia《Into the Great Lives》新系列教育訓練',
+        id: 'arpedia-0721', category: '3pp',
+        name: 'ARpedia《Into the Great Lives》教育訓練',
         audience: '全門市與校園門市，請至少派一名夥伴參加\n會員經營部，請主管指派夥伴參加',
         sessions: [
-          { id: '7/14', date: '7/14', dow: '二', time: '14:00–15:00', loc: '', tag: '' }
+          { id: '7/21', date: '7/21', dow: '二', time: '14:00–15:00', loc: '', tag: '' }
         ]
       },
       {
@@ -917,7 +957,7 @@
         name: '店務課程',
         audience: '需通過儲備幹部考核',
         sessions: [
-          { id: '7/17',    date: '7/17',    dow: '五', time: '09:30–12:00', loc: '' }
+          { id: '7/17', date: '7/17', dow: '五', time: '09:30–12:00', loc: '' }
         ]
       },
       {
@@ -925,7 +965,8 @@
         name: '客服入門',
         audience: '需通過新人考核 M1',
         sessions: [
-          { id: '7/23',    date: '7/23',    dow: '四', time: '14:00–16:00', loc: '' }
+          { id: '7/23', date: '7/23', dow: '四', time: '14:00–16:00', loc: '' },
+          { id: '8/20', date: '8/20', dow: '四', time: '14:00–16:00', loc: '' }
         ]
       },
       {
@@ -933,7 +974,8 @@
         name: '維修收取件',
         audience: '需通過新人考核 M2',
         sessions: [
-          { id: '7/24',    date: '7/24',    dow: '五', time: '14:00–16:00', loc: '' }
+          { id: '7/24', date: '7/24', dow: '五', time: '14:00–16:00', loc: '' },
+          { id: '8/21', date: '8/21', dow: '五', time: '14:00–16:00', loc: '' }
         ]
       },
       {
@@ -941,9 +983,9 @@
         name: '銷售框架 × 實戰演練 — 2026 年資深顧問培訓課程',
         audience: '各門市指派 1 位代表，以資深銷售顧問為主\n若無符合者，可由儲備幹部或店長代替',
         sessions: [
-          { id: '南區-7/16', date: '7/16', dow: '四', time: '13:00–17:00', loc: '高雄三多四樓', tag: '【南區場次】' },
+          { id: '南區-7/16', date: '7/16', dow: '四', time: '13:00–17:00', loc: '高雄三多四樓',                      tag: '【南區場次】' },
           { id: '中區-7/17', date: '7/17', dow: '五', time: '13:00–17:00', loc: 'WORK HUB 智能商務空間－台中世基 B 館', tag: '【中區場次】' },
-          { id: '北區-7/22', date: '7/22', dow: '三', time: '13:00–17:00', loc: '中影八德大樓（台北）', tag: '【北區場次】' }
+          { id: '北區-7/22', date: '7/22', dow: '三', time: '13:00–17:00', loc: '中影八德大樓（台北）',               tag: '【北區場次】' }
         ]
       },
       {
@@ -951,8 +993,8 @@
         name: '化解衝突 × 從容應對 — 2026 年店長培訓課程',
         audience: '各區門市店長\n如當天無法出席，請安排儲幹代理',
         sessions: [
-          { id: '南區-8/10', date: '8/10', dow: '一', time: '09:30–16:30', loc: 'WORK HUB 高雄光華 B 館', tag: '【南區場次】' },
-          { id: '北區-8/13', date: '8/13', dow: '四', time: '09:30–16:30', loc: '中影八德大樓（台北）', tag: '【北區場次】' }
+          { id: '中南區-8/10', date: '8/10', dow: '一', time: '09:30–16:30', loc: 'WORK HUB 高雄光華 B 館', tag: '【中南區場次】' },
+          { id: '北竹區-8/13', date: '8/13', dow: '四', time: '09:30–16:30', loc: '中影八德大樓（台北）',   tag: '【北竹區場次】' }
         ]
       },
       {
@@ -960,17 +1002,25 @@
         name: 'iOS Expert + Mac Specialist 檢定',
         audience: '資格符合者（詳見課程建議）',
         sessions: [
-          { id: '南區-8/3',   date: '8/3',  dow: '一', time: '14:00–16:30', loc: '高雄三多會議室',  tag: '【南區下午場】' },
-          { id: '北區早-8/6', date: '8/6',  dow: '四', time: '10:00–12:00', loc: '總公司台北教室',  tag: '【北區上午場】' },
-          { id: '北區午-8/6', date: '8/6',  dow: '四', time: '14:00–16:30', loc: '總公司台北教室',  tag: '【北區下午場】' }
+          { id: '南區-8/3',   date: '8/3', dow: '一', time: '14:00–16:30', loc: '高雄三多會議室', tag: '【南區場次】'   },
+          { id: '北區早-8/6', date: '8/6', dow: '四', time: '10:00–12:00', loc: '總公司台北教室', tag: '【北區上午場】' },
+          { id: '北區午-8/6', date: '8/6', dow: '四', time: '14:00–16:30', loc: '總公司台北教室', tag: '【北區下午場】' }
         ]
       }
     ];
 
     // ── 渲染 ──
+    function parseSessionDate(dateStr) {
+      const [m, d] = dateStr.split('/').map(Number);
+      return new Date(2026, m - 1, d);
+    }
+
     function renderCourses() {
       const grid = document.getElementById('courseGrid');
-      COURSES.forEach(c => {
+      const sorted = [...COURSES].sort((a, b) =>
+        parseSessionDate(a.sessions[0].date) - parseSessionDate(b.sessions[0].date)
+      );
+      sorted.forEach(c => {
         const rows = c.sessions.map((s, i) => `
           <label class="session-row session-radio-row">
             <input type="radio" name="session-${c.id}" value="${s.id}" ${i === 0 ? 'checked' : ''} class="session-radio">
@@ -1115,17 +1165,28 @@
 
     // ── 不用報名的課程（僅顯示用）──
     const INFO_EVENTS = [
-      { date: '2026-07-01', name: '新人到職 Day 1', time: '10:30–15:30' },
-      { date: '2026-07-02', name: '新人到職 Day 2', time: '10:30–15:30' },
-      { date: '2026-07-03', name: '新人到職 Day 3', time: '10:30–15:30' },
-      { date: '2026-07-07', name: '新人到職 Day 4', time: '10:30–15:30' },
-      { date: '2026-07-08', name: '新人到職 Day 5', time: '10:30–12:30' },
+      // 7 月
+      { date: '2026-07-06', name: '新人到職 Day 1', time: '10:30–15:30' },
+      { date: '2026-07-07', name: '新人到職 Day 2', time: '10:30–15:30' },
+      { date: '2026-07-08', name: '新人到職 Day 3', time: '10:30–15:30' },
+      { date: '2026-07-09', name: '新人到職 Day 4', time: '10:30–15:30' },
+      { date: '2026-07-10', name: '新人到職 Day 5', time: '10:30–12:30' },
       { date: '2026-07-23', name: '新人考核 – 筆試', time: '09:30–10:30' },
       { date: '2026-07-23', name: '晉升考核 – 筆試', time: '10:30–11:30' },
-      { date: '2026-07-28', name: 'iOS Expert 衝刺班 Day 1', time: '依信件通知' },
-      { date: '2026-07-29', name: 'iOS Expert 衝刺班 Day 2', time: '依信件通知' },
-      { date: '2026-07-30', name: 'Mac Specialist 衝刺班 Day 1', time: '依信件通知' },
-      { date: '2026-07-31', name: 'Mac Specialist 衝刺班 Day 2', time: '依信件通知' },
+      { date: '2026-07-27', name: 'iOS Expert 衝刺班 Day 1', time: '依信件通知' },
+      { date: '2026-07-28', name: 'iOS Expert 衝刺班 Day 2', time: '依信件通知' },
+      { date: '2026-07-29', name: 'Mac Specialist 衝刺班 Day 1', time: '依信件通知' },
+      { date: '2026-07-30', name: 'Mac Specialist 衝刺班 Day 2', time: '依信件通知' },
+      // 8 月
+      { date: '2026-08-03', name: '新人到職 Day 1', time: '10:30–15:30' },
+      { date: '2026-08-04', name: '新人到職 Day 2', time: '10:30–15:30' },
+      { date: '2026-08-05', name: '新人到職 Day 3', time: '10:30–15:30' },
+      { date: '2026-08-06', name: '新人到職 Day 4', time: '10:30–15:30' },
+      { date: '2026-08-07', name: '新人到職 Day 5', time: '10:30–12:30' },
+      { date: '2026-08-20', name: '新人考核 – 筆試', time: '09:30–10:30' },
+      { date: '2026-08-20', name: '晉升考核 – 筆試', time: '10:30–11:30' },
+      { date: '2026-08-24', name: 'Mac 銷售技巧 Day 1', time: '10:30–15:30' },
+      { date: '2026-08-25', name: 'Mac 銷售技巧 Day 2', time: '10:30–15:30' },
     ];
 
     // ── 日曆渲染 ──
@@ -1179,7 +1240,8 @@
               continue;
             }
             const key = `2026-${String(m).padStart(2,'0')}-${String(day.getDate()).padStart(2,'0')}`;
-            const events = eventMap[key] || [];
+            const toMin = t => { const r = t.match(/^(\d{1,2}):(\d{2})/); return r ? +r[1]*60 + +r[2] : Infinity; };
+            const events = (eventMap[key] || []).sort((a, b) => toMin(a.time) - toMin(b.time));
             const isToday = new Date().toDateString() === day.toDateString();
             const chips = events.map(e => {
               const cls = `cal-event cal-event-${e.cat}${e.canReg ? ' cal-event-reg' : ''}`;
@@ -1202,6 +1264,30 @@
     }
 
     // ── Tab 篩選 ──
+    function equalizeCardHeaders() {
+      const cards = [...document.querySelectorAll('.course-card:not(.hidden)')];
+      cards.forEach(c => { c.querySelector('.card-header').style.minHeight = ''; });
+      if (cards.length < 2) return;
+      const rows = [];
+      let rowTop = -1, currentRow = [];
+      cards.forEach(card => {
+        const top = Math.round(card.getBoundingClientRect().top);
+        if (top !== rowTop) {
+          if (currentRow.length) rows.push(currentRow);
+          currentRow = [card];
+          rowTop = top;
+        } else {
+          currentRow.push(card);
+        }
+      });
+      if (currentRow.length) rows.push(currentRow);
+      rows.forEach(row => {
+        const hs = row.map(c => c.querySelector('.card-header'));
+        const max = Math.max(...hs.map(h => h.offsetHeight));
+        hs.forEach(h => h.style.minHeight = max + 'px');
+      });
+    }
+
     function filterTab(cat, btn) {
       document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
@@ -1214,12 +1300,19 @@
 
       let n = 0;
       document.querySelectorAll('.course-card').forEach(card => {
-        const show = !isCal && !isRec && card.dataset.category === cat;
+        const catMatch = card.dataset.category === cat ||
+          (cat === 'in-service' && card.dataset.category === '3pp');
+        const show = !isCal && !isRec && catMatch;
         card.classList.toggle('hidden', !show);
         if (show) n++;
       });
       document.getElementById('emptyState').style.display = (!isCal && !isRec && n === 0) ? 'block' : 'none';
+      if (!isCal && !isRec) equalizeCardHeaders();
     }
+
+    window.addEventListener('resize', () => {
+      if (document.querySelector('.course-card:not(.hidden)')) equalizeCardHeaders();
+    });
 
     // ── Modal ──
     let activeCourse = null, activeSession = null;
@@ -1243,10 +1336,16 @@
       // 場次選單一律隱藏（已在卡片上選好）
       document.getElementById('sessionSelectGroup').style.display = 'none';
 
-      const isCert = activeCourse.category === 'cert';
+      const isCert    = activeCourse.category === 'cert';
+      const isManager = activeCourse.category === 'manager';
+
       const certGroup = document.getElementById('certTypeGroup');
       certGroup.style.display = isCert ? 'block' : 'none';
       document.getElementById('fieldCertType').required = isCert;
+
+      document.getElementById('dietGroup').style.display    = isManager ? 'block' : 'none';
+      document.getElementById('allergyGroup').style.display = isManager ? 'block' : 'none';
+      document.querySelectorAll('input[name="diet"]').forEach(r => { r.required = isManager; });
 
       document.getElementById('formView').style.display    = 'block';
       document.getElementById('successView').style.display = 'none';
@@ -1281,7 +1380,9 @@
         category:      activeCourse.category,
         sessionMonth:  sessionMonth,
         session:       `${chosen.date}（${chosen.dow}）　${chosen.time}${chosen.tag ? '　' + chosen.tag : (chosen.loc ? '　' + chosen.loc : '')}`,
-        certType:      activeCourse.category === 'cert' ? document.getElementById('fieldCertType').value : '',
+        certType:      activeCourse.category === 'cert'    ? document.getElementById('fieldCertType').value : '',
+        diet:          activeCourse.category === 'manager' ? (document.querySelector('input[name="diet"]:checked')?.value || '') : '',
+        allergy:       activeCourse.category === 'manager' ? document.getElementById('fieldAllergy').value.trim() : '',
         store:         document.getElementById('fieldStore').value,
         employeeId:    document.getElementById('fieldEmployeeId').value.trim(),
         name:          document.getElementById('fieldName').value.trim()
