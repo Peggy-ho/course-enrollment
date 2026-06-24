@@ -95,6 +95,9 @@
     }
 
     .header-link:hover { color: var(--c-in-service); }
+    .header-links { display: flex; align-items: center; gap: 4px; font-size: 12px; font-weight: 500; color: var(--text-2); }
+    .header-links-label { margin-right: 4px; }
+    .header-links-sep { color: var(--border); user-select: none; }
 
     /* ── Tabs ── */
     .tabs-bar {
@@ -723,6 +726,9 @@
     }
 
     .enroll-btn-full {
+      display: block;
+      text-align: center;
+      text-decoration: none;
       width: 100%;
       padding: 8px 12px;
       font-size: 11px;
@@ -740,12 +746,14 @@
       <div class="header-sep"></div>
       <span class="header-title">在職培訓課程報名</span>
     </div>
-    <a class="header-link" id="sheetsLink" href="#" target="_blank">
-      查閱報名名單
-      <svg width="11" height="11" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M2 10 L10 2"/><path d="M5 2 H10 V7"/>
-      </svg>
-    </a>
+    <div class="header-links">
+      <span class="header-links-label">報名狀況查詢：</span>
+      <a class="header-link" href="https://docs.google.com/spreadsheets/d/1kvYhKv056dM8C22LmcTc6vvla5TzvBji8vwqm0Mkj9U/edit?usp=sharing" target="_blank" rel="noopener">每月課程・原廠檢定</a>
+      <span class="header-links-sep">｜</span>
+      <a class="header-link" href="https://docs.google.com/spreadsheets/d/1jBkJtv5IZBXTNlFILm5X6ReSQSedo9pupwoxEXXCHPU/edit?usp=sharing" target="_blank" rel="noopener">資深課程</a>
+      <span class="header-links-sep">｜</span>
+      <a class="header-link" href="https://docs.google.com/spreadsheets/d/16LKWW1FUl3PrLr9C5ZM3Wd9M2zJnVJrRtfOLXHZT3z0/edit?usp=sharing" target="_blank" rel="noopener">店長課程</a>
+    </div>
   </header>
 
   <nav class="tabs-bar">
@@ -921,9 +929,8 @@
   <script>
     // ── 設定 ──
     const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbw3HcIg6mwteeNcKtERoDWCx-ppuyJ6eFuiLYqBSoquX_8dp6MGx-9OPvPlvEc9VNwV/exec';
-    const SHEETS_URL = 'https://docs.google.com/spreadsheets/d/18T6G52SFlTUHid3IPW-2kAdFAsUL0PGHN_ETtZDAhJM/edit?usp=sharing';
+    const SHEETS_URL = 'https://docs.google.com/spreadsheets/d/1kvYhKv056dM8C22LmcTc6vvla5TzvBji8vwqm0Mkj9U/edit?usp=sharing';
 
-    document.getElementById('sheetsLink').href        = SHEETS_URL;
     document.getElementById('successSheetsLink').href = SHEETS_URL;
 
     const CAT_LABEL = {
@@ -979,7 +986,7 @@
         ]
       },
       {
-        id: 'senior-sales', category: 'senior',
+        id: 'senior-sales', category: 'senior', externalUrl: 'https://forms.gle/akT3dqarPTFg4z8N8',
         name: '銷售框架 × 實戰演練 — 2026 年資深顧問培訓課程',
         audience: '各門市指派 1 位代表，以資深銷售顧問為主\n若無符合者，可由儲備幹部或店長代替',
         sessions: [
@@ -989,7 +996,7 @@
         ]
       },
       {
-        id: 'manager-course', category: 'manager',
+        id: 'manager-course', category: 'manager', externalUrl: 'https://forms.gle/jQXZ6YPvWMetLYA57',
         name: '化解衝突 × 從容應對 — 2026 年店長培訓課程',
         audience: '各區門市店長\n如當天無法出席，請安排儲幹代理',
         sessions: [
@@ -1021,7 +1028,15 @@
         parseSessionDate(a.sessions[0].date) - parseSessionDate(b.sessions[0].date)
       );
       sorted.forEach(c => {
-        const rows = c.sessions.map((s, i) => `
+        const rows = c.sessions.map((s, i) => c.externalUrl ? `
+          <div class="session-row">
+            <div class="session-date">${s.date}<span class="session-dow">（${s.dow}）</span></div>
+            <div class="session-detail">
+              <div class="session-time">${s.tag ? s.tag + '　' : ''}${s.time}</div>
+              ${s.loc ? `<div class="session-loc">${s.loc}</div>` : ''}
+            </div>
+          </div>
+        ` : `
           <label class="session-row session-radio-row">
             <input type="radio" name="session-${c.id}" value="${s.id}" ${i === 0 ? 'checked' : ''} class="session-radio">
             <div class="session-date">${s.date}<span class="session-dow">（${s.dow}）</span></div>
@@ -1045,7 +1060,10 @@
             ${rows}
           </div>
           <div class="card-footer">
-            <button class="enroll-btn enroll-btn-full" onclick="openModalFromRadio('${c.id}')">報名</button>
+            ${c.externalUrl
+              ? `<a class="enroll-btn enroll-btn-full" href="${c.externalUrl}" target="_blank" rel="noopener">報名</a>`
+              : `<button class="enroll-btn enroll-btn-full" onclick="openModalFromRadio('${c.id}')">報名</button>`
+            }
           </div>
         `;
         grid.appendChild(card);
