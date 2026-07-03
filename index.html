@@ -995,16 +995,6 @@
           { id: '中南區-8/10', date: '8/10', dow: '一', time: '09:30–16:30', loc: 'WORK HUB 高雄光華 B 館', tag: '【中南區場次】' },
           { id: '北竹區-8/13', date: '8/13', dow: '四', time: '09:30–16:30', loc: '中影八德大樓（台北）',   tag: '【北竹區場次】' }
         ]
-      },
-      {
-        id: 'cert', category: 'cert',
-        name: 'iOS Expert + Mac Specialist 檢定',
-        audience: '資格符合者（詳見課程建議）',
-        sessions: [
-          { id: '南區-8/3',   date: '8/3', dow: '一', time: '14:00–16:30', loc: '高雄三多會議室', tag: '【南區場次】'   },
-          { id: '北區早-8/6', date: '8/6', dow: '四', time: '10:00–12:00', loc: '總公司台北教室', tag: '【北區上午場】' },
-          { id: '北區午-8/6', date: '8/6', dow: '四', time: '14:00–16:30', loc: '總公司台北教室', tag: '【北區下午場】' }
-        ]
       }
     ];
 
@@ -1187,6 +1177,9 @@
       { date: '2026-08-05', name: '新人到職 Day 3', time: '10:30–15:30' },
       { date: '2026-08-06', name: '新人到職 Day 4', time: '10:30–15:30' },
       { date: '2026-08-07', name: '新人到職 Day 5', time: '10:30–12:30' },
+      { date: '2026-08-03', name: 'iOS Expert + Mac Specialist 檢定（南區場次）', time: '14:00–16:30', cat: 'cert' },
+      { date: '2026-08-06', name: 'iOS Expert + Mac Specialist 檢定（北區上午場）', time: '10:00–12:00', cat: 'cert' },
+      { date: '2026-08-06', name: 'iOS Expert + Mac Specialist 檢定（北區下午場）', time: '14:00–16:30', cat: 'cert' },
       { date: '2026-08-20', name: '新人考核 / 晉升考核 – 筆試', time: '10:00–11:00' },
     ];
 
@@ -1212,7 +1205,7 @@
       // 不用報名的課程
       INFO_EVENTS.forEach(e => {
         if (!eventMap[e.date]) eventMap[e.date] = [];
-        eventMap[e.date].push({ name: e.name, tag: '', time: e.time, cat: 'info', canReg: false });
+        eventMap[e.date].push({ name: e.name, tag: '', time: e.time, cat: e.cat || 'info', canReg: false });
       });
 
       view.innerHTML = '';
