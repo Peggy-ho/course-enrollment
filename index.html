@@ -952,14 +952,6 @@
     // ── 課程資料 ──
     const COURSES = [
       {
-        id: 'store-ops', category: 'in-service',
-        name: '店務課程',
-        audience: '需通過儲備幹部考核',
-        sessions: [
-          { id: '7/17', date: '7/17', dow: '五', time: '09:30–12:00', loc: '' }
-        ]
-      },
-      {
         id: 'customer-service', category: 'in-service',
         name: '客服入門',
         audience: '需通過新人考核 M1',
@@ -975,16 +967,6 @@
         sessions: [
           { id: '7/24', date: '7/24', dow: '五', time: '14:00–16:00', loc: '' },
           { id: '8/28', date: '8/28', dow: '五', time: '14:00–16:00', loc: '' }
-        ]
-      },
-      {
-        id: 'senior-sales', category: 'senior', externalUrl: 'https://forms.gle/akT3dqarPTFg4z8N8',
-        name: '銷售框架 × 實戰演練 — 2026 年資深顧問培訓課程',
-        audience: '各門市指派 1 位代表，以資深銷售顧問為主\n若無符合者，可由儲備幹部或店長代替',
-        sessions: [
-          { id: '南區-7/16', date: '7/16', dow: '四', time: '13:00–17:00', loc: '高雄三多四樓',                      tag: '【南區場次】' },
-          { id: '中區-7/17', date: '7/17', dow: '五', time: '13:00–17:00', loc: 'WORK HUB 智能商務空間－台中世基 B 館', tag: '【中區場次】' },
-          { id: '北區-7/22', date: '7/22', dow: '三', time: '13:00–17:00', loc: '中影八德大樓（台北）',               tag: '【北區場次】' }
         ]
       },
       {
@@ -1161,6 +1143,10 @@
     // ── 不用報名的課程（僅顯示用）──
     const INFO_EVENTS = [
       // 7 月
+      { date: '2026-07-16', name: '銷售框架 × 實戰演練 — 2026 年資深顧問培訓課程（南區場次）', time: '13:00–17:00', cat: 'senior' },
+      { date: '2026-07-17', name: '銷售框架 × 實戰演練 — 2026 年資深顧問培訓課程（中區場次）', time: '13:00–17:00', cat: 'senior' },
+      { date: '2026-07-17', name: '店務課程', time: '09:30–12:00', cat: 'in-service' },
+      { date: '2026-07-22', name: '銷售框架 × 實戰演練 — 2026 年資深顧問培訓課程（北區場次）', time: '13:00–17:00', cat: 'senior' },
       { date: '2026-07-06', name: '新人到職 Day 1', time: '10:30–15:30' },
       { date: '2026-07-07', name: '新人到職 Day 2', time: '10:30–15:30' },
       { date: '2026-07-08', name: '新人到職 Day 3', time: '10:30–15:30' },
