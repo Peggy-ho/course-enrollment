@@ -1184,7 +1184,7 @@
           if (!eventMap[key]) eventMap[key] = [];
           const name  = c.name;
           const tag   = s.tag ? `【${s.tag.replace(/【|】/g, '')}】` : '';
-          eventMap[key].push({ name, tag, time: s.time, cat: c.category, canReg: true, cid: c.id, sid: s.id });
+          eventMap[key].push({ name, tag, time: s.time, cat: c.category, canReg: true, cid: c.id, sid: s.id, externalUrl: c.externalUrl });
         });
       });
 
@@ -1225,7 +1225,9 @@
             const isToday = new Date().toDateString() === day.toDateString();
             const chips = events.map(e => {
               const cls = `cal-event cal-event-${e.cat}${e.canReg ? ' cal-event-reg' : ''}`;
-              const click = e.canReg ? `onclick="openModal('${e.cid}','${e.sid}')"` : '';
+              const click = e.canReg
+                ? (e.externalUrl ? `onclick="window.open('${e.externalUrl}','_blank')"` : `onclick="openModal('${e.cid}','${e.sid}')"`)
+                : '';
               return `<div class="${cls}" ${click}>
                 <div class="cal-event-name">${e.name}${e.tag ? '<br>' + e.tag : ''}</div>
                 <div class="cal-event-time">${e.time}</div>
