@@ -305,6 +305,11 @@
 
     .ics-btn:hover { color: var(--cat-c); border-color: var(--cat-c); }
 
+    @media (max-width: 640px) {
+      .ics-btn { width: 34px; height: 34px; }
+      .ics-btn svg { width: 16px; height: 16px; }
+    }
+
     .ics-btn svg {
       width: 14px;
       height: 14px;
@@ -315,33 +320,34 @@
       stroke-linejoin: round;
     }
 
-    .cal-event { position: relative; }
-
     .cal-event-ics {
-      position: absolute;
-      top: 2px;
-      right: 2px;
-      width: 16px;
-      height: 16px;
       display: flex;
       align-items: center;
       justify-content: center;
-      border-radius: 3px;
+      gap: 4px;
+      margin: 5px -7px -4px;
+      padding: 7px 0;
+      border-top: 1px solid rgba(0,0,0,0.08);
       color: inherit;
-      opacity: 0.6;
+      opacity: 0.75;
       cursor: pointer;
     }
 
-    .cal-event-ics:hover { opacity: 1; }
+    .cal-event-ics:hover, .cal-event-ics:active { opacity: 1; }
 
     .cal-event-ics svg {
-      width: 11px;
-      height: 11px;
+      width: 13px;
+      height: 13px;
       stroke: currentColor;
       stroke-width: 2;
       fill: none;
       stroke-linecap: round;
       stroke-linejoin: round;
+    }
+
+    @media (max-width: 640px) {
+      .cal-event-ics { padding: 9px 0; }
+      .cal-event-ics svg { width: 15px; height: 15px; }
     }
 
     .cal-subscribe-bar {
@@ -1499,9 +1505,9 @@
                 ? `<div class="cal-event-ics" title="加入行事曆" onclick="event.stopPropagation(); addSessionToCalendar('${e.cid}','${e.sid}')">${CAL_ICON_SVG}</div>`
                 : `<div class="cal-event-ics" title="加入行事曆" onclick="event.stopPropagation(); addInfoEventToCalendar('${key}','${jsStrEscape(e.name)}','${jsStrEscape(e.time)}')">${CAL_ICON_SVG}</div>`;
               return `<div class="${cls}" ${click}>
-                ${icsBtn}
                 <div class="cal-event-name">${e.name}${e.tag ? '<br>' + e.tag : ''}</div>
                 <div class="cal-event-time">${e.time}</div>
+                ${icsBtn}
               </div>`;
             }).join('');
             html += `<div class="cal-day${isToday ? ' cal-today' : ''}">
