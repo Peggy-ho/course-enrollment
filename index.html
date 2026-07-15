@@ -287,6 +287,113 @@
       box-shadow: 0 2px 10px rgba(0,0,0,0.18);
     }
 
+    /* ── 單一場次加入行事曆 ── */
+    .ics-btn {
+      flex-shrink: 0;
+      width: 26px;
+      height: 26px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      border-radius: 5px;
+      cursor: pointer;
+      color: var(--text-3);
+      transition: color 0.15s, border-color 0.15s;
+    }
+
+    .ics-btn:hover { color: var(--cat-c); border-color: var(--cat-c); }
+
+    .ics-btn svg {
+      width: 14px;
+      height: 14px;
+      stroke: currentColor;
+      stroke-width: 2;
+      fill: none;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .cal-event { position: relative; }
+
+    .cal-event-ics {
+      position: absolute;
+      top: 2px;
+      right: 2px;
+      width: 16px;
+      height: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 3px;
+      color: inherit;
+      opacity: 0.6;
+      cursor: pointer;
+    }
+
+    .cal-event-ics:hover { opacity: 1; }
+
+    .cal-event-ics svg {
+      width: 11px;
+      height: 11px;
+      stroke: currentColor;
+      stroke-width: 2;
+      fill: none;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .cal-subscribe-bar {
+      display: none;
+      align-items: center;
+      gap: 10px;
+      background: var(--c-in-service-bg);
+      border: 1px solid var(--c-in-service);
+      border-radius: 8px;
+      padding: 10px 14px;
+      margin-bottom: 14px;
+    }
+
+    .cal-subscribe-bar.show { display: flex; }
+
+    .cal-subscribe-bar svg {
+      flex-shrink: 0;
+      width: 18px;
+      height: 18px;
+      stroke: var(--c-in-service);
+      stroke-width: 2;
+      fill: none;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .cal-subscribe-text {
+      flex: 1;
+      font-size: 12px;
+      color: var(--text-2);
+      line-height: 1.5;
+    }
+
+    .cal-subscribe-link {
+      flex-shrink: 0;
+      font-size: 12px;
+      font-weight: 700;
+      color: #fff;
+      background: var(--c-in-service);
+      padding: 7px 14px;
+      border-radius: 6px;
+      text-decoration: none;
+      white-space: nowrap;
+    }
+
+    .cal-subscribe-link:hover { opacity: 0.88; }
+
+    @media (max-width: 640px) {
+      .cal-subscribe-bar { flex-wrap: wrap; }
+      .cal-subscribe-link { width: 100%; text-align: center; }
+    }
+
     /* ── Modal ── */
     .modal-overlay {
       display: none;
@@ -500,6 +607,36 @@
     }
 
     .success-close:hover { background: var(--border); }
+
+    .success-ics-btn {
+      margin-top: 20px;
+      margin-right: 10px;
+      padding: 10px 20px;
+      background: #fff;
+      color: var(--text-1);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      font-size: 13px;
+      font-weight: 600;
+      font-family: inherit;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: border-color 0.15s;
+    }
+
+    .success-ics-btn:hover { border-color: var(--text-3); }
+
+    .success-ics-btn svg {
+      width: 14px;
+      height: 14px;
+      stroke: currentColor;
+      stroke-width: 2;
+      fill: none;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
 
     /* ── Empty state ── */
     .empty-state {
@@ -767,6 +904,11 @@
   </nav>
 
   <main class="main">
+    <div class="cal-subscribe-bar" id="calSubscribeBar">
+      <svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>
+      <div class="cal-subscribe-text">把整份課程行事曆訂閱到手機，之後課程更新會自動同步，不用每次手動加</div>
+      <a class="cal-subscribe-link" href="webcal://peggy-ho.github.io/course-enrollment/events.ics">訂閱行事曆</a>
+    </div>
     <div class="calendar-view" id="calendarView"></div>
     <div class="course-grid" id="courseGrid"></div>
     <div class="empty-state" id="emptyState">目前沒有開放報名的課程</div>
@@ -919,7 +1061,13 @@
           <h3>報名完成</h3>
           <p>已收到您的報名資料。<br>
              可至 <a id="successSheetsLink" href="#" target="_blank">報名名單</a> 查詢確認。</p>
-          <button class="success-close" onclick="closeModal()">關閉</button>
+          <div>
+            <button class="success-ics-btn" onclick="addActiveSessionToCalendar()">
+              <svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>
+              加入 iPhone 行事曆
+            </button>
+            <button class="success-close" onclick="closeModal()">關閉</button>
+          </div>
         </div>
 
       </div>
@@ -978,6 +1126,123 @@
       }
     ];
 
+    // ── 加入行事曆（單一場次 .ics）──
+    function pad2(n) { return String(n).padStart(2, '0'); }
+
+    // 內嵌進 onclick='' 屬性時用，非 HTML escape
+    function jsStrEscape(str) {
+      return String(str).replace(/\\/g, '\\\\').replace(/'/g, "\\'");
+    }
+
+    function icsEscape(str) {
+      return String(str).replace(/\\/g, '\\\\').replace(/;/g, '\\;').replace(/,/g, '\\,').replace(/\n/g, '\\n');
+    }
+
+    function buildIcs({ summary, location, start, end, allDay }) {
+      const lines = [
+        'BEGIN:VCALENDAR',
+        'VERSION:2.0',
+        'PRODID:-//STUDIO A//在職課程報名平台//EN',
+        'BEGIN:VTIMEZONE',
+        'TZID:Asia/Taipei',
+        'BEGIN:STANDARD',
+        'DTSTART:19700101T000000',
+        'TZOFFSETFROM:+0800',
+        'TZOFFSETTO:+0800',
+        'TZNAME:CST',
+        'END:STANDARD',
+        'END:VTIMEZONE',
+        'BEGIN:VEVENT',
+        `UID:${Date.now()}-${Math.random().toString(36).slice(2)}@studioa-enrollment`,
+        `SUMMARY:${icsEscape(summary)}`
+      ];
+      if (location) lines.push(`LOCATION:${icsEscape(location)}`);
+      if (allDay) {
+        lines.push(`DTSTART;VALUE=DATE:${start.y}${pad2(start.m)}${pad2(start.d)}`);
+        lines.push(`DTEND;VALUE=DATE:${end.y}${pad2(end.m)}${pad2(end.d)}`);
+      } else {
+        lines.push(`DTSTART;TZID=Asia/Taipei:${start.y}${pad2(start.m)}${pad2(start.d)}T${pad2(start.h)}${pad2(start.min)}00`);
+        lines.push(`DTEND;TZID=Asia/Taipei:${end.y}${pad2(end.m)}${pad2(end.d)}T${pad2(end.h)}${pad2(end.min)}00`);
+      }
+      lines.push('END:VEVENT', 'END:VCALENDAR');
+      return lines.join('\r\n');
+    }
+
+    // 不加 download 屬性 —— iPhone Safari 遇到 text/calendar 的連結會直接跳「加入行事曆」畫面，
+    // 加上 download 屬性反而會被當成一般檔案下載，看不到加入行事曆的畫面
+    function downloadIcs(icsContent) {
+      const blob = new Blob([icsContent], { type: 'text/calendar;charset=utf-8' });
+      const url  = URL.createObjectURL(blob);
+      const a    = document.createElement('a');
+      a.href = url;
+      a.target = '_blank';
+      a.rel = 'noopener';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      setTimeout(() => URL.revokeObjectURL(url), 4000);
+    }
+
+    // 場次時間解析，如「14:00–16:00」「09:30–16:30」；解析不出來的（如「依信件通知」）回傳 null
+    function parseTimeRange(timeStr) {
+      const m = String(timeStr).match(/^(\d{1,2}):(\d{2})\s*[–-]\s*(\d{1,2}):(\d{2})/);
+      if (!m) return null;
+      return { sh: +m[1], smin: +m[2], eh: +m[3], emin: +m[4] };
+    }
+
+    function icsForCourseSession(course, session) {
+      const [mo, d] = session.date.split('/').map(Number);
+      const y = 2026;
+      const summary = course.name + (session.tag ? ' ' + session.tag.replace(/【|】/g, '') : '');
+      const range = parseTimeRange(session.time);
+      if (!range) {
+        return buildIcs({
+          summary, location: session.loc,
+          start: { y, m: mo, d }, end: { y, m: mo, d: d + 1 },
+          allDay: true
+        });
+      }
+      return buildIcs({
+        summary, location: session.loc,
+        start: { y, m: mo, d, h: range.sh, min: range.smin },
+        end:   { y, m: mo, d, h: range.eh, min: range.emin }
+      });
+    }
+
+    function addSessionToCalendar(courseId, sessionId) {
+      const course  = COURSES.find(c => c.id === courseId);
+      const session = course.sessions.find(s => s.id === sessionId);
+      downloadIcs(icsForCourseSession(course, session));
+    }
+
+    function addActiveSessionToCalendar() {
+      if (!activeCourse || !activeSession) return;
+      downloadIcs(icsForCourseSession(activeCourse, activeSession));
+    }
+
+    function icsForInfoEvent(e) {
+      const [y, mo, d] = e.date.split('-').map(Number);
+      const range = parseTimeRange(e.time);
+      if (!range) {
+        return buildIcs({
+          summary: e.name, location: '',
+          start: { y, m: mo, d }, end: { y, m: mo, d: d + 1 },
+          allDay: true
+        });
+      }
+      return buildIcs({
+        summary: e.name, location: '',
+        start: { y, m: mo, d, h: range.sh, min: range.smin },
+        end:   { y, m: mo, d, h: range.eh, min: range.emin }
+      });
+    }
+
+    function addInfoEventToCalendar(dateStr, name, time) {
+      downloadIcs(icsForInfoEvent({ date: dateStr, name, time }));
+    }
+
+    const CAL_ICON_SVG = '<svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>';
+
     // ── 渲染 ──
     function parseSessionDate(dateStr) {
       const [m, d] = dateStr.split('/').map(Number);
@@ -997,6 +1262,7 @@
               <div class="session-time">${s.tag ? s.tag + '　' : ''}${s.time}</div>
               ${s.loc ? `<div class="session-loc">${s.loc}</div>` : ''}
             </div>
+            <button type="button" class="ics-btn" title="加入行事曆" onclick="addSessionToCalendar('${c.id}','${s.id}')">${CAL_ICON_SVG}</button>
           </div>
         ` : `
           <label class="session-row session-radio-row">
@@ -1006,6 +1272,7 @@
               <div class="session-time">${s.tag ? s.tag + '　' : ''}${s.time}</div>
               ${s.loc ? `<div class="session-loc">${s.loc}</div>` : ''}
             </div>
+            <button type="button" class="ics-btn" title="加入行事曆" onclick="event.preventDefault(); event.stopPropagation(); addSessionToCalendar('${c.id}','${s.id}')">${CAL_ICON_SVG}</button>
           </label>
         `).join('');
 
@@ -1228,7 +1495,11 @@
               const click = e.canReg
                 ? (e.externalUrl ? `onclick="window.open('${e.externalUrl}','_blank')"` : `onclick="openModal('${e.cid}','${e.sid}')"`)
                 : '';
+              const icsBtn = e.canReg
+                ? `<div class="cal-event-ics" title="加入行事曆" onclick="event.stopPropagation(); addSessionToCalendar('${e.cid}','${e.sid}')">${CAL_ICON_SVG}</div>`
+                : `<div class="cal-event-ics" title="加入行事曆" onclick="event.stopPropagation(); addInfoEventToCalendar('${key}','${jsStrEscape(e.name)}','${jsStrEscape(e.time)}')">${CAL_ICON_SVG}</div>`;
               return `<div class="${cls}" ${click}>
+                ${icsBtn}
                 <div class="cal-event-name">${e.name}${e.tag ? '<br>' + e.tag : ''}</div>
                 <div class="cal-event-time">${e.time}</div>
               </div>`;
@@ -1278,6 +1549,7 @@
       const isRec = cat === 'recommend';
 
       document.getElementById('calendarView').classList.toggle('show', isCal);
+      document.getElementById('calSubscribeBar').classList.toggle('show', isCal);
       document.getElementById('recommendView').classList.toggle('show', isRec);
 
       let n = 0;
@@ -1391,6 +1663,7 @@
     renderCalendar();
     // 預設顯示日曆，隱藏所有課程卡片
     document.getElementById('calendarView').classList.add('show');
+    document.getElementById('calSubscribeBar').classList.add('show');
     document.querySelectorAll('.course-card').forEach(card => card.classList.add('hidden'));
   </script>
 
