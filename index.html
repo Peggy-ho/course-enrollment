@@ -1107,6 +1107,14 @@
     // ── 課程資料 ──
     const COURSES = [
       {
+        id: 'arpedia-0811', category: '3pp',
+        name: 'ARpedia《Into the Great Lives》教育訓練',
+        audience: '全門市與校園門市，請至少派一名夥伴參加\n會員經營部，請主管指派夥伴參加',
+        sessions: [
+          { id: '8/11', date: '8/11', dow: '二', time: '14:00–15:00', loc: '', tag: '' }
+        ]
+      },
+      {
         id: 'customer-service', category: 'in-service',
         name: '客服入門',
         audience: '需通過新人考核 M1',
@@ -1223,20 +1231,20 @@
       const range = parseTimeRange(e.time);
       if (!range) {
         return buildIcs({
-          summary: e.name, location: '',
+          summary: e.name, location: e.loc || '',
           start: { y, m: mo, d }, end: { y, m: mo, d: d + 1 },
           allDay: true
         });
       }
       return buildIcs({
-        summary: e.name, location: '',
+        summary: e.name, location: e.loc || '',
         start: { y, m: mo, d, h: range.sh, min: range.smin },
         end:   { y, m: mo, d, h: range.eh, min: range.emin }
       });
     }
 
-    function addInfoEventToCalendar(dateStr, name, time) {
-      downloadIcs(icsForInfoEvent({ date: dateStr, name, time }));
+    function addInfoEventToCalendar(dateStr, name, time, loc) {
+      downloadIcs(icsForInfoEvent({ date: dateStr, name, time, loc }));
     }
 
     const CAL_ICON_SVG = '<svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>';
