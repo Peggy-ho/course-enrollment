@@ -67,7 +67,7 @@ const vevents = [];
 
 COURSES.forEach(c => {
   c.sessions.forEach(s => {
-    const [mo, d] = s.date.split('/').map(Number);
+    const [mo, d] = s.date.replace(/–.*/, '').split('/').map(Number); // 兩天課程 '10/27–10/28' 取第一天
     const summary = c.name + (s.tag ? ' ' + s.tag.replace(/【|】/g, '') : '');
     vevents.push(buildEvent({ summary, location: s.loc, y: 2026, mo, d, time: s.time }));
   });
