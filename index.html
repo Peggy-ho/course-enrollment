@@ -1369,7 +1369,8 @@
 
     // ── 建議名單（2026/08/28 版本 — 分三類：課程建議名單／影片未完成／待檢定名單）──
     // 客服入門已納入 8/20 新人考核 M1 通過者（M1 無術科，成績確定）：SA3373、SA3362、SA3367、SA3364
-    // 其餘課程仍依培訓紀錄實際值；8 月 M2／M3／資深／店長術科尚未整理，維修收取件與影片名單待術科整完再更新
+    // 維修收取件已納入 8/20 M2 通過者（術科經 Peggy 確認通過）：SA3280、SA3334、SA3344、SA3289、SA3342、SA3355、SA3352
+    // 影片未完成名單仍為培訓紀錄實際值，待 8 月考核整份回寫後重算
     const RECOMMENDATIONS = {
       courseRec: {
         title: '課程建議名單',
@@ -1393,7 +1394,14 @@
             course: "維修收取件",
             category: 'in-service',
             people: [
+              { region: "北一區", store: "微風", id: 'SA3289', name: "Ocean" },
+              { region: "桃竹區", store: "桃園統領", id: 'SA3352', name: "Levi" },
+              { region: "桃竹區", store: "竹北遠百", id: 'SA3355', name: "Tony" },
+              { region: "中區", store: "台中中科", id: 'SA3280', name: "Putter" },
+              { region: "中區", store: "台中中科", id: 'SA3334', name: "Joe" },
+              { region: "中區", store: "台中豐原", id: 'SA3344', name: "Austin" },
               { region: "南區", store: "高雄三多", id: 'SA3237', name: "Jerry" },
+              { region: "南區", store: "高雄三多", id: 'SA3342', name: "Yi" },
             ]
           },
           {
