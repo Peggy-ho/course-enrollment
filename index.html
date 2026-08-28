@@ -1368,9 +1368,12 @@
     }
 
     // ── 建議名單（2026/08/28 版本 — 分三類：課程建議名單／影片未完成／待檢定名單）──
-    // 客服入門已納入 8/20 新人考核 M1 通過者（M1 無術科，成績確定）：SA3373、SA3362、SA3367、SA3364
-    // 維修收取件已納入 8/20 M2 通過者（術科經 Peggy 確認通過）：SA3280、SA3334、SA3344、SA3289、SA3342、SA3355、SA3352
-    // 影片未完成名單仍為培訓紀錄實際值，待 8 月考核整份回寫後重算
+    // 已納入 2026/08 考核結果（8/20 筆試；術科經 Peggy 確認通過）：
+    //   客服入門 ＋SA3373、SA3362、SA3367、SA3364（M1 通過，M1 無術科）
+    //   維修收取件 ＋SA3280、SA3334、SA3344、SA3289、SA3342、SA3355、SA3352（M2 通過）
+    //   影片「M3 前完成」組隨 M2 通過的 11 位進入 M3 區間而擴大
+    // 未納入：SA3358 Hana（M1 筆試 70 未過）；SA3313 Ida（北二區 M3 術科未收到，
+    //   但她三支影片皆已完成，不影響任何名單）
     const RECOMMENDATIONS = {
       courseRec: {
         title: '課程建議名單',
@@ -1545,26 +1548,58 @@
           {
             course: "法治教育影片", note: 'M3 前完成', color: VIDEO_COLOR,
             people: [
+              { region: "北一區", store: "大葉高島屋", id: 'SA3345', name: "Pika" },
+              { region: "北一區", store: "微風", id: 'SA3289', name: "Ocean" },
               { region: "北一區", store: "美麗華", id: 'SA3322', name: "Gary" },
+              { region: "北一區", store: "美麗華", id: 'SA3346', name: "Allen" },
               { region: "北一區", store: "阿波羅", id: 'SA3308', name: "Jane" },
               { region: "桃竹區", store: "新竹中正", id: 'SA3325', name: "Ben" },
+              { region: "桃竹區", store: "桃園統領", id: 'SA3352', name: "Levi" },
+              { region: "桃竹區", store: "竹北遠百", id: 'SA3355', name: "Tony" },
+              { region: "桃竹區", store: "苗栗尚順", id: 'SA3324', name: "Hao" },
+              { region: "中區", store: "台中中科", id: 'SA3280', name: "Putter" },
+              { region: "中區", store: "台中中科", id: 'SA3334', name: "Joe" },
+              { region: "中區", store: "台中精誠", id: 'SA3333', name: "MOMO" },
+              { region: "中區", store: "台中豐原", id: 'SA3344', name: "Austin" },
+              { region: "南區", store: "高雄三多", id: 'SA3342', name: "Yi" },
             ]
           },
           {
             course: "職場安全影片（緊急異常）", note: 'M3 前完成', color: VIDEO_COLOR,
             people: [
+              { region: "北一區", store: "大葉高島屋", id: 'SA3345', name: "Pika" },
+              { region: "北一區", store: "微風", id: 'SA3289', name: "Ocean" },
               { region: "北一區", store: "美麗華", id: 'SA3322', name: "Gary" },
+              { region: "北一區", store: "美麗華", id: 'SA3346', name: "Allen" },
               { region: "北一區", store: "阿波羅", id: 'SA3308', name: "Jane" },
               { region: "桃竹區", store: "新竹中正", id: 'SA3325', name: "Ben" },
+              { region: "桃竹區", store: "桃園統領", id: 'SA3352', name: "Levi" },
+              { region: "桃竹區", store: "竹北遠百", id: 'SA3355', name: "Tony" },
+              { region: "桃竹區", store: "苗栗尚順", id: 'SA3324', name: "Hao" },
+              { region: "中區", store: "台中中科", id: 'SA3280', name: "Putter" },
+              { region: "中區", store: "台中中科", id: 'SA3334', name: "Joe" },
+              { region: "中區", store: "台中精誠", id: 'SA3333', name: "MOMO" },
+              { region: "中區", store: "台中豐原", id: 'SA3344', name: "Austin" },
               { region: "南區", store: "高雄三多", id: 'SA3237', name: "Jerry" },
+              { region: "南區", store: "高雄三多", id: 'SA3342', name: "Yi" },
             ]
           },
           {
             course: "資料移轉影片", note: 'M3 前完成', color: VIDEO_COLOR,
             people: [
+              { region: "北一區", store: "大葉高島屋", id: 'SA3345', name: "Pika" },
+              { region: "北一區", store: "微風", id: 'SA3289', name: "Ocean" },
               { region: "北一區", store: "阿波羅", id: 'SA3308', name: "Jane" },
               { region: "北二區", store: "板橋遠百", id: 'SA3301', name: "Yunwan" },
               { region: "桃竹區", store: "新竹中正", id: 'SA3325', name: "Ben" },
+              { region: "桃竹區", store: "桃園統領", id: 'SA3352', name: "Levi" },
+              { region: "桃竹區", store: "竹北遠百", id: 'SA3355', name: "Tony" },
+              { region: "桃竹區", store: "苗栗尚順", id: 'SA3324', name: "Hao" },
+              { region: "中區", store: "台中中科", id: 'SA3280', name: "Putter" },
+              { region: "中區", store: "台中中科", id: 'SA3334', name: "Joe" },
+              { region: "中區", store: "台中精誠", id: 'SA3333', name: "MOMO" },
+              { region: "中區", store: "台中豐原", id: 'SA3344', name: "Austin" },
+              { region: "南區", store: "高雄三多", id: 'SA3342', name: "Yi" },
             ]
           },
         ]
