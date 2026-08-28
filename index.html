@@ -1368,6 +1368,8 @@
     }
 
     // ── 建議名單（2026/08/28 版本 — 分三類：課程建議名單／影片未完成／待檢定名單）──
+    // 客服入門已納入 8/20 新人考核 M1 通過者（M1 無術科，成績確定）：SA3373、SA3362、SA3367、SA3364
+    // 其餘課程仍依培訓紀錄實際值；8 月 M2／M3／資深／店長術科尚未整理，維修收取件與影片名單待術科整完再更新
     const RECOMMENDATIONS = {
       courseRec: {
         title: '課程建議名單',
@@ -1376,8 +1378,12 @@
             course: "客服入門",
             category: 'in-service',
             people: [
+              { region: "北二區", store: "新西門", id: 'SA3373', name: "Betty" },
               { region: "北二區", store: "板橋遠百", id: 'SA3301', name: "Yunwan" },
               { region: "北二區", store: "板橋遠百", id: 'SA3314', name: "Vincent" },
+              { region: "桃竹區", store: "中壢大江", id: 'SA3362', name: "Chen" },
+              { region: "桃竹區", store: "中壢大江", id: 'SA3367', name: "Yu Ching" },
+              { region: "桃竹區", store: "桃園統領", id: 'SA3364', name: "Kaiting" },
               { region: "中區", store: "台中中科", id: 'SA3334', name: "Joe" },
               { region: "南區", store: "高雄三多", id: 'SA3237', name: "Jerry" },
               { region: "校園店", store: "成功大學", id: 'SA3311', name: "Lily" },
