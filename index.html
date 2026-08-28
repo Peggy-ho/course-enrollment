@@ -1374,6 +1374,10 @@
     //   影片「M3 前完成」組隨 M2 通過的 11 位進入 M3 區間而擴大
     // 未納入：SA3358 Hana（M1 筆試 70 未過）；SA3313 Ida（北二區 M3 術科未收到，
     //   但她三支影片皆已完成，不影響任何名單）
+    //
+    // 2026/08/28 移除「職場性別平等影片」：該項已由「職場不法侵害」改版取代，
+    // 全公司須於 2026/09/06 前完成。培訓記錄的職場不法侵害欄目前尚未回填，
+    // 待 9/6 截止後一次回填，再把這一組改成「職場不法侵害」放回來。
     const RECOMMENDATIONS = {
       courseRec: {
         title: '課程建議名單',
@@ -1492,33 +1496,6 @@
           },
           {
             course: "資訊安全影片", note: '到職即完成', color: VIDEO_COLOR,
-            people: [
-              { region: "北一區", store: "大葉高島屋", id: 'SA3379', name: "Amy" },
-              { region: "北一區", store: "微風", id: 'SA3388', name: "Carrie" },
-              { region: "北二區", store: "新店裕隆城", id: 'SA3370', name: "Alston" },
-              { region: "北二區", store: "板橋誠品", id: 'SA3385', name: "Bruce" },
-              { region: "北二區", store: "永和", id: 'SA3387', name: "Jeremy" },
-              { region: "桃竹區", store: "中壢大江", id: 'SA3291', name: "Ginger" },
-              { region: "桃竹區", store: "新竹中正", id: 'SA3294', name: "Sharon" },
-              { region: "桃竹區", store: "新竹中正", id: 'SA3363', name: "Ariel" },
-              { region: "桃竹區", store: "新竹光復", id: 'SA3319', name: "Eric" },
-              { region: "桃竹區", store: "新竹光復", id: 'SA3381', name: "Fen" },
-              { region: "桃竹區", store: "新竹光復", id: 'SA3384', name: "JENG" },
-              { region: "桃竹區", store: "新竹光復", id: 'SA3393', name: "Camille" },
-              { region: "桃竹區", store: "新竹遠百", id: 'SA3382', name: "Roger" },
-              { region: "桃竹區", store: "新竹遠百", id: 'SA3386', name: "Aegis" },
-              { region: "桃竹區", store: "竹北遠百", id: 'SA3383', name: "Kate" },
-              { region: "中區", store: "台中精誠", id: 'SA3401', name: "Dino" },
-              { region: "中區", store: "台中精誠", id: 'SA3409', name: "Mila" },
-              { region: "中區", store: "彩虹台中", id: 'SA3399', name: "Yuna" },
-              { region: "南區", store: "大億西門", id: 'SA3366', name: "Leon" },
-              { region: "南區", store: "高雄三多", id: 'SA3391', name: "Revan" },
-              { region: "校園店", store: "中教大學", id: 'SA3378', name: "Harper" },
-              { region: "校園店", store: "清華大學", id: 'SA3360', name: "Alice" },
-            ]
-          },
-          {
-            course: "職場性別平等影片", note: '到職即完成', color: VIDEO_COLOR,
             people: [
               { region: "北一區", store: "大葉高島屋", id: 'SA3379', name: "Amy" },
               { region: "北一區", store: "微風", id: 'SA3388', name: "Carrie" },
