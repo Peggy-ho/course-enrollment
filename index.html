@@ -1165,7 +1165,6 @@
         name: '客服入門',
         audience: '需通過新人考核 M1',
         sessions: [
-          { id: '9/24', date: '9/24', dow: '四', time: '14:00–16:00', loc: '' },
           { id: '10/29', date: '10/29', dow: '四', time: '14:00–16:00', loc: '' }
         ]
       },
@@ -1174,7 +1173,6 @@
         name: '維修收取件',
         audience: '需通過新人考核 M2',
         sessions: [
-          { id: '9/30', date: '9/30', dow: '三', time: '14:00–16:00', loc: '' },
           { id: '10/30', date: '10/30', dow: '五', time: '14:00–16:00', loc: '' }
         ]
       },
@@ -1778,6 +1776,8 @@
       { date: '2026-09-04', name: '新人到職 Day 4', time: '10:30–15:30' },
       { date: '2026-09-07', name: '新人到職 Day 5', time: '10:30–12:30' },
       { date: '2026-09-10', name: '新人考核 / 晉升考核 – 筆試', time: '10:00–11:00' },
+      { date: '2026-09-24', name: '客服入門', time: '14:00–16:00', cat: 'in-service' },
+      { date: '2026-09-30', name: '維修收取件', time: '14:00–16:00', cat: 'in-service' },
       // 10 月
       { date: '2026-10-01', name: '新人到職 Day 1', time: '10:30–15:30' },
       { date: '2026-10-02', name: '新人到職 Day 2', time: '10:30–15:30' },
@@ -1790,8 +1790,8 @@
       { date: '2026-10-22', name: '新人到職 Day 4（晚上場）', time: '17:00–22:00' },
       { date: '2026-10-23', name: '新人到職 Day 5（晚上場）', time: '17:00–19:00' },
       { date: '2026-10-22', name: '新人考核 / 晉升考核 – 筆試', time: '10:00–11:00' },
-      { date: '2026-10-28', name: 'iOS 銷售技巧 Day 2', time: '10:30–15:30', cat: 'in-service' },
-      { date: '2026-10-30', name: 'Mac 銷售技巧 Day 2', time: '10:30–15:30', cat: 'in-service' },
+      { date: '2026-10-28', name: 'iOS 銷售技巧 Day 2', time: '10:30–15:30', cat: 'in-service', regCid: 'ios-sales', regSid: '10/27' },
+      { date: '2026-10-30', name: 'Mac 銷售技巧 Day 2', time: '10:30–15:30', cat: 'in-service', regCid: 'mac-sales', regSid: '10/29' },
     ];
 
     // ── 日曆渲染 ──
@@ -1816,7 +1816,7 @@
       // 不用報名的課程
       INFO_EVENTS.forEach(e => {
         if (!eventMap[e.date]) eventMap[e.date] = [];
-        eventMap[e.date].push({ name: e.name, tag: '', time: e.time, cat: e.cat || 'info', canReg: false });
+        eventMap[e.date].push({ name: e.name, tag: '', time: e.time, cat: e.cat || 'info', canReg: false, regCid: e.regCid, regSid: e.regSid });
       });
 
       view.innerHTML = '';
@@ -1849,10 +1849,13 @@
             const events = (eventMap[key] || []).sort((a, b) => toMin(a.time) - toMin(b.time));
             const isToday = new Date().toDateString() === day.toDateString();
             const chips = events.map(e => {
-              const cls = `cal-event cal-event-${e.cat}${e.canReg ? ' cal-event-reg' : ''}`;
+              // regCid/regSid：兩天課程的 Day 2 這類 INFO_EVENTS，點下去開母場次的報名視窗
+              // （加入行事曆仍走 addInfoEventToCalendar，才會帶到 Day 2 自己的日期）
+              const clickable = e.canReg || !!e.regCid;
+              const cls = `cal-event cal-event-${e.cat}${clickable ? ' cal-event-reg' : ''}`;
               const click = e.canReg
                 ? (e.externalUrl ? `onclick="window.open('${e.externalUrl}','_blank')"` : `onclick="openModal('${e.cid}','${e.sid}')"`)
-                : '';
+                : (e.regCid ? `onclick="openModal('${e.regCid}','${e.regSid}')"` : '');
               const icsBtn = e.canReg
                 ? `<div class="cal-event-ics" title="加入行事曆" onclick="event.stopPropagation(); addSessionToCalendar('${e.cid}','${e.sid}')">${CAL_ICON_SVG}</div>`
                 : `<div class="cal-event-ics" title="加入行事曆" onclick="event.stopPropagation(); addInfoEventToCalendar('${key}','${jsStrEscape(e.name)}','${jsStrEscape(e.time)}')">${CAL_ICON_SVG}</div>`;
