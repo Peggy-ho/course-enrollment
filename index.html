@@ -1369,17 +1369,23 @@
       });
     }
 
-    // ── 建議名單（2026/08/28 版本 — 分三類：課程建議名單／影片未完成／待檢定名單）──
-    // 已納入 2026/08 考核結果（8/20 筆試；術科經 Peggy 確認通過）：
-    //   客服入門 ＋SA3373、SA3362、SA3367、SA3364（M1 通過，M1 無術科）
-    //   維修收取件 ＋SA3280、SA3334、SA3344、SA3289、SA3342、SA3355、SA3352（M2 通過）
-    //   影片「M3 前完成」組隨 M2 通過的 11 位進入 M3 區間而擴大
-    // 未納入：SA3358 Hana（M1 筆試 70 未過）；SA3313 Ida（北二區 M3 術科未收到，
-    //   但她三支影片皆已完成，不影響任何名單）
+    // ── 建議名單（2026/09/07 版本 — 分三類：課程建議名單／影片未完成／待檢定名單）──
+    // 資料來源：2026/09/07 匯出的「門市 / 校園培訓歷程」（回填職場不法侵害後的欄位順序）。
     //
-    // 2026/08/28 移除「職場性別平等影片」：該項已由「職場不法侵害」改版取代，
-    // 全公司須於 2026/09/06 前完成。培訓記錄的職場不法侵害欄目前尚未回填，
-    // 待 9/6 截止後一次回填，再把這一組改成「職場不法侵害」放回來。
+    // 名單範圍（2026/09/07 Peggy 定）：
+    //   ・總公司／晶盛總公司不列入（本平台只服務門市與校園店）
+    //   ・校園店支援部隊固定豁免，職場不法侵害也套用同一豁免
+    //
+    // 職場不法侵害：2026/08/28 取代「職場性別平等影片」，全公司須於 2026/09/06 前完成；
+    //   培訓記錄該欄（門市/校園表 col 19）已於 09/07 回填，本次首度納入名單。
+    //
+    // 08/28 → 09/07 主要變動：
+    //   ・M3 前完成三組隨 9 月 M3 通過者大幅縮小（法治 14→6、職安 15→7、資料移轉 13→6）
+    //   ・服務禮儀／資訊安全隨 9 月新進人員擴大；SA3388、SA3385、SA3370、SA3366 已補完移出
+    //   ・iOS 銷售技巧與 iOS Expert 檢定隨新晉升銷售顧問擴大
+    //   ・離職移出：SA3311、SA3175、SA3379、SA3391
+    // 沿用 08/28 的人工排除：Zoe(SA3039)／Joyce(SA3133) 服務禮儀影片欄空白但年資較長，
+    //   疑為舊制未回填，待 Peggy 另外確認前暫不列入。
     const RECOMMENDATIONS = {
       courseRec: {
         title: '課程建議名單',
@@ -1388,15 +1394,15 @@
             course: "客服入門",
             category: 'in-service',
             people: [
-              { region: "北二區", store: "新西門", id: 'SA3373', name: "Betty" },
               { region: "北二區", store: "板橋遠百", id: 'SA3301', name: "Yunwan" },
               { region: "北二區", store: "板橋遠百", id: 'SA3314', name: "Vincent" },
+              { region: "北二區", store: "新西門", id: 'SA3373', name: "Betty" },
+              { region: "北二區", store: "新西門", id: 'SA3358', name: "Hana" },
               { region: "桃竹區", store: "中壢大江", id: 'SA3362', name: "Chen" },
               { region: "桃竹區", store: "中壢大江", id: 'SA3367', name: "Yu Ching" },
               { region: "桃竹區", store: "桃園統領", id: 'SA3364', name: "Kaiting" },
               { region: "中區", store: "台中中科", id: 'SA3334', name: "Joe" },
               { region: "南區", store: "高雄三多", id: 'SA3237', name: "Jerry" },
-              { region: "校園店", store: "成功大學", id: 'SA3311', name: "Lily" },
             ]
           },
           {
@@ -1404,8 +1410,8 @@
             category: 'in-service',
             people: [
               { region: "北一區", store: "微風", id: 'SA3289', name: "Ocean" },
-              { region: "桃竹區", store: "桃園統領", id: 'SA3352', name: "Levi" },
               { region: "桃竹區", store: "竹北遠百", id: 'SA3355', name: "Tony" },
+              { region: "桃竹區", store: "桃園統領", id: 'SA3352', name: "Levi" },
               { region: "中區", store: "台中中科", id: 'SA3280', name: "Putter" },
               { region: "中區", store: "台中中科", id: 'SA3334', name: "Joe" },
               { region: "中區", store: "台中豐原", id: 'SA3344', name: "Austin" },
@@ -1418,23 +1424,28 @@
             category: 'in-service',
             people: [
               { region: "北一區", store: "大葉高島屋", id: 'SA3276', name: "Steven" },
-              { region: "北一區", store: "美麗華", id: 'SA2497', name: "Chou Yan" },
-              { region: "北一區", store: "美麗華", id: 'SA2985', name: "Andrew" },
-              { region: "北一區", store: "美麗華", id: 'SA3164', name: "Zoe" },
+              { region: "北一區", store: "阿波羅", id: 'SA3307', name: "Kent" },
               { region: "北一區", store: "阿波羅", id: 'SA3148', name: "Justin" },
-              { region: "北二區", store: "新店裕隆城", id: 'SA3243', name: "Hsuan" },
+              { region: "北一區", store: "美麗華", id: 'SA3164', name: "Zoe" },
+              { region: "北一區", store: "美麗華", id: 'SA2985', name: "Andrew" },
+              { region: "北一區", store: "美麗華", id: 'SA2497', name: "Chou Yan" },
+              { region: "北一區", store: "微風", id: 'SA3337', name: "Chloe" },
+              { region: "北二區", store: "板橋誠品", id: 'SA3313', name: "Ida" },
               { region: "北二區", store: "板橋遠百", id: 'SA3150', name: "Emily" },
               { region: "北二區", store: "花蓮", id: 'SA3004', name: "Yu" },
+              { region: "北二區", store: "新店裕隆城", id: 'SA3243', name: "Hsuan" },
               { region: "桃竹區", store: "中壢大江", id: 'SA3272', name: "Stewart" },
-              { region: "桃竹區", store: "新竹遠百", id: 'SA3277', name: "Yu-Hung" },
+              { region: "桃竹區", store: "苗栗尚順", id: 'SA3310', name: "Tracy" },
               { region: "桃竹區", store: "新竹遠百", id: 'SA3315', name: "Kelvin" },
+              { region: "桃竹區", store: "新竹遠百", id: 'SA3277', name: "Yu-Hung" },
+              { region: "中區", store: "台中金典", id: 'SA3296', name: "Kelly" },
               { region: "中區", store: "台中精誠", id: 'SA3128', name: "Mira" },
               { region: "中區", store: "台中豐原", id: 'SA3215', name: "Oreo" },
-              { region: "中區", store: "台中金典", id: 'SA3296', name: "Kelly" },
-              { region: "南區", store: "夢時代", id: 'SA3188', name: "Hong" },
-              { region: "南區", store: "大億西門", id: 'SA3253', name: "Dian" },
-              { region: "南區", store: "大億西門", id: 'SA3263', name: "Jeff" },
+              { region: "中區", store: "台中麗寶", id: 'SA3327', name: "Ian" },
               { region: "南區", store: "大億西門", id: 'SA3266', name: "Liam" },
+              { region: "南區", store: "大億西門", id: 'SA3263', name: "Jeff" },
+              { region: "南區", store: "大億西門", id: 'SA3253', name: "Dian" },
+              { region: "南區", store: "夢時代", id: 'SA3188', name: "Hong" },
             ]
           },
           {
@@ -1444,22 +1455,22 @@
               { region: "北一區", store: "士林", id: 'SA3154', name: "Winter" },
               { region: "北一區", store: "大葉高島屋", id: 'SA3040', name: "Dylan" },
               { region: "北一區", store: "羅東", id: 'SA3075', name: "Hush" },
-              { region: "北二區", store: "新莊宏匯", id: 'SA2965', name: "Nick" },
               { region: "北二區", store: "板橋誠品", id: 'SA2809', name: "Gaby" },
-              { region: "桃竹區", store: "新竹中正", id: 'SA3219', name: "Vicky" },
-              { region: "桃竹區", store: "桃園台茂", id: 'SA3279', name: "Selena" },
+              { region: "北二區", store: "新莊宏匯", id: 'SA2965', name: "Nick" },
+              { region: "桃竹區", store: "竹北遠百", id: 'SA3171', name: "Stan" },
               { region: "桃竹區", store: "桃園台茂", id: 'SA3295', name: "Jeremy" },
+              { region: "桃竹區", store: "桃園台茂", id: 'SA3279', name: "Selena" },
               { region: "桃竹區", store: "桃園統領", id: 'SA3269', name: "Yao-yao" },
               { region: "桃竹區", store: "桃園統領", id: 'SA3281', name: "Kevin" },
-              { region: "桃竹區", store: "竹北遠百", id: 'SA3171', name: "Stan" },
-              { region: "中區", store: "台中精誠", id: 'SA2836', name: "Egg" },
+              { region: "桃竹區", store: "新竹中正", id: 'SA3219', name: "Vicky" },
               { region: "中區", store: "台中金典", id: 'SA3097', name: "Tommy" },
+              { region: "中區", store: "台中精誠", id: 'SA2836', name: "Egg" },
               { region: "中區", store: "台中麗寶", id: 'SA3343', name: "Leo" },
               { region: "中區", store: "彩虹台中", id: 'SA2754', name: "Lizzy" },
-              { region: "南區", store: "夢時代", id: 'SA2846', name: "Dada" },
               { region: "南區", store: "高雄三多", id: 'SA3244', name: "Ying" },
-              { region: "南區", store: "高雄岡山", id: 'SA2880', name: "Alston" },
               { region: "南區", store: "高雄岡山", id: 'SA3202', name: "Wayne" },
+              { region: "南區", store: "高雄岡山", id: 'SA2880', name: "Alston" },
+              { region: "南區", store: "夢時代", id: 'SA2846', name: "Dada" },
             ]
           },
         ]
@@ -1467,59 +1478,107 @@
       videoRec: {
         title: '影片未完成',
         groups: [
-          // 已排除：校園店支援部隊（固定豁免）＋ Zoe(SA3039)/Joyce(SA3133)（年資較長，待 Peggy 另外確認暫不列入）
-          //         Sandy(SA3130) 服務禮儀影片已於 2026-08 回填，本次自動移出名單
+          // 到職即完成組：校園店支援部隊固定豁免（2026-08-13 定案，職場不法侵害同樣適用）
           {
             course: "服務禮儀影片", note: '到職即完成', color: VIDEO_COLOR,
             people: [
-              { region: "北一區", store: "大葉高島屋", id: 'SA3379', name: "Amy" },
-              { region: "北一區", store: "微風", id: 'SA3388', name: "Carrie" },
-              { region: "北二區", store: "新店裕隆城", id: 'SA3370', name: "Alston" },
-              { region: "北二區", store: "板橋誠品", id: 'SA3385', name: "Bruce" },
+              { region: "北一區", store: "士林", id: 'SA3416', name: "Maji" },
+              { region: "北一區", store: "阿波羅", id: 'SA3415', name: "Kiki" },
+              { region: "北二區", store: "永和", id: 'SA3417', name: "CQ" },
               { region: "北二區", store: "永和", id: 'SA3387', name: "Jeremy" },
+              { region: "北二區", store: "板橋遠百", id: 'SA3407', name: "Ruby" },
+              { region: "北二區", store: "新店裕隆城", id: 'SA3418', name: "Jiya" },
+              { region: "北二區", store: "新店裕隆城", id: 'SA3406', name: "Audrey" },
               { region: "桃竹區", store: "中壢大江", id: 'SA3291', name: "Ginger" },
+              { region: "桃竹區", store: "竹北遠百", id: 'SA3383', name: "Kate" },
+              { region: "桃竹區", store: "桃園台茂", id: 'SA3410', name: "Kevin" },
               { region: "桃竹區", store: "新竹中正", id: 'SA3294', name: "Sharon" },
               { region: "桃竹區", store: "新竹中正", id: 'SA3363', name: "Ariel" },
-              { region: "桃竹區", store: "新竹光復", id: 'SA3319', name: "Eric" },
               { region: "桃竹區", store: "新竹光復", id: 'SA3381', name: "Fen" },
               { region: "桃竹區", store: "新竹光復", id: 'SA3384', name: "JENG" },
+              { region: "桃竹區", store: "新竹光復", id: 'SA3319', name: "Eric" },
+              { region: "桃竹區", store: "新竹光復", id: 'SA3421', name: "Michael" },
               { region: "桃竹區", store: "新竹光復", id: 'SA3393', name: "Camille" },
               { region: "桃竹區", store: "新竹遠百", id: 'SA3382', name: "Roger" },
               { region: "桃竹區", store: "新竹遠百", id: 'SA3386', name: "Aegis" },
-              { region: "桃竹區", store: "竹北遠百", id: 'SA3383', name: "Kate" },
+              { region: "中區", store: "台中中科", id: 'SA3403', name: "Lena" },
+              { region: "中區", store: "台中金典", id: 'SA3414', name: "Albee" },
               { region: "中區", store: "台中精誠", id: 'SA3401', name: "Dino" },
               { region: "中區", store: "台中精誠", id: 'SA3409', name: "Mila" },
+              { region: "中區", store: "台中豐原", id: 'SA3413', name: "Ivan" },
               { region: "中區", store: "彩虹台中", id: 'SA3399', name: "Yuna" },
-              { region: "南區", store: "大億西門", id: 'SA3366', name: "Leon" },
-              { region: "南區", store: "高雄三多", id: 'SA3391', name: "Revan" },
+              { region: "南區", store: "高雄岡山", id: 'SA3404', name: "Lun" },
+              { region: "校園店", store: "中教大學", id: 'SA3323', name: "Phicilia" },
               { region: "校園店", store: "中教大學", id: 'SA3378', name: "Harper" },
+              { region: "校園店", store: "中興大學", id: 'SA3405', name: "Sandy" },
+              { region: "校園店", store: "成功大學", id: 'SA3400', name: "Sabrina" },
               { region: "校園店", store: "清華大學", id: 'SA3360', name: "Alice" },
             ]
           },
           {
             course: "資訊安全影片", note: '到職即完成', color: VIDEO_COLOR,
             people: [
-              { region: "北一區", store: "大葉高島屋", id: 'SA3379', name: "Amy" },
-              { region: "北一區", store: "微風", id: 'SA3388', name: "Carrie" },
-              { region: "北二區", store: "新店裕隆城", id: 'SA3370', name: "Alston" },
-              { region: "北二區", store: "板橋誠品", id: 'SA3385', name: "Bruce" },
+              { region: "北一區", store: "士林", id: 'SA3416', name: "Maji" },
+              { region: "北一區", store: "阿波羅", id: 'SA3415', name: "Kiki" },
+              { region: "北二區", store: "永和", id: 'SA3417', name: "CQ" },
               { region: "北二區", store: "永和", id: 'SA3387', name: "Jeremy" },
+              { region: "北二區", store: "板橋遠百", id: 'SA3407', name: "Ruby" },
+              { region: "北二區", store: "新店裕隆城", id: 'SA3418', name: "Jiya" },
+              { region: "北二區", store: "新店裕隆城", id: 'SA3406', name: "Audrey" },
               { region: "桃竹區", store: "中壢大江", id: 'SA3291', name: "Ginger" },
+              { region: "桃竹區", store: "竹北遠百", id: 'SA3383', name: "Kate" },
+              { region: "桃竹區", store: "桃園台茂", id: 'SA3410', name: "Kevin" },
               { region: "桃竹區", store: "新竹中正", id: 'SA3294', name: "Sharon" },
               { region: "桃竹區", store: "新竹中正", id: 'SA3363', name: "Ariel" },
-              { region: "桃竹區", store: "新竹光復", id: 'SA3319', name: "Eric" },
               { region: "桃竹區", store: "新竹光復", id: 'SA3381', name: "Fen" },
               { region: "桃竹區", store: "新竹光復", id: 'SA3384', name: "JENG" },
+              { region: "桃竹區", store: "新竹光復", id: 'SA3319', name: "Eric" },
+              { region: "桃竹區", store: "新竹光復", id: 'SA3421', name: "Michael" },
               { region: "桃竹區", store: "新竹光復", id: 'SA3393', name: "Camille" },
               { region: "桃竹區", store: "新竹遠百", id: 'SA3382', name: "Roger" },
               { region: "桃竹區", store: "新竹遠百", id: 'SA3386', name: "Aegis" },
-              { region: "桃竹區", store: "竹北遠百", id: 'SA3383', name: "Kate" },
+              { region: "中區", store: "台中中科", id: 'SA3403', name: "Lena" },
+              { region: "中區", store: "台中金典", id: 'SA3414', name: "Albee" },
               { region: "中區", store: "台中精誠", id: 'SA3401', name: "Dino" },
               { region: "中區", store: "台中精誠", id: 'SA3409', name: "Mila" },
+              { region: "中區", store: "台中豐原", id: 'SA3413', name: "Ivan" },
               { region: "中區", store: "彩虹台中", id: 'SA3399', name: "Yuna" },
-              { region: "南區", store: "大億西門", id: 'SA3366', name: "Leon" },
-              { region: "南區", store: "高雄三多", id: 'SA3391', name: "Revan" },
+              { region: "南區", store: "高雄岡山", id: 'SA3404', name: "Lun" },
+              { region: "校園店", store: "中教大學", id: 'SA3323', name: "Phicilia" },
               { region: "校園店", store: "中教大學", id: 'SA3378', name: "Harper" },
+              { region: "校園店", store: "中興大學", id: 'SA3405', name: "Sandy" },
+              { region: "校園店", store: "成功大學", id: 'SA3400', name: "Sabrina" },
+              { region: "校園店", store: "清華大學", id: 'SA3360', name: "Alice" },
+            ]
+          },
+          {
+            course: "職場不法侵害", note: '到職即完成', color: VIDEO_COLOR,
+            people: [
+              { region: "北一區", store: "士林", id: 'SA3416', name: "Maji" },
+              { region: "北一區", store: "大葉高島屋", id: 'SA3345', name: "Pika" },
+              { region: "北一區", store: "大葉高島屋", id: 'SA3276', name: "Steven" },
+              { region: "北一區", store: "阿波羅", id: 'SA1637', name: "Ernest" },
+              { region: "北一區", store: "阿波羅", id: 'SA3415', name: "Kiki" },
+              { region: "北一區", store: "阿波羅", id: 'SA2115', name: "Dyson" },
+              { region: "北一區", store: "美麗華", id: 'SA3002', name: "Walter" },
+              { region: "北一區", store: "美麗華", id: 'SA3346', name: "Allen" },
+              { region: "北一區", store: "美麗華", id: 'SA2211', name: "Peggy" },
+              { region: "北一區", store: "美麗華", id: 'SA3164', name: "Zoe" },
+              { region: "北一區", store: "美麗華", id: 'SA2985', name: "Andrew" },
+              { region: "北一區", store: "美麗華", id: 'SA2497', name: "Chou Yan" },
+              { region: "北一區", store: "羅東", id: 'SA3075', name: "Hush" },
+              { region: "北一區", store: "羅東", id: 'SA2268', name: "Jack" },
+              { region: "桃竹區", store: "桃園台茂", id: 'SA3368', name: "Janice" },
+              { region: "桃竹區", store: "桃園台茂", id: 'SA769', name: "Alice" },
+              { region: "桃竹區", store: "桃園台茂", id: 'SA3410', name: "Kevin" },
+              { region: "桃竹區", store: "桃園台茂", id: 'SA3295', name: "Jeremy" },
+              { region: "桃竹區", store: "新竹光復", id: 'SA3421', name: "Michael" },
+              { region: "南區", store: "大立", id: 'SA251', name: "Aaron" },
+              { region: "南區", store: "大億西門", id: 'SA3081', name: "Skylar" },
+              { region: "南區", store: "高雄三多", id: 'SA3237', name: "Jerry" },
+              { region: "南區", store: "高雄岡山", id: 'SA3404', name: "Lun" },
+              { region: "校園店", store: "中興大學", id: 'SA3405', name: "Sandy" },
+              { region: "校園店", store: "清華大學", id: 'SA395', name: "Gary" },
               { region: "校園店", store: "清華大學", id: 'SA3360', name: "Alice" },
             ]
           },
@@ -1529,15 +1588,7 @@
             people: [
               { region: "北一區", store: "大葉高島屋", id: 'SA3345', name: "Pika" },
               { region: "北一區", store: "微風", id: 'SA3289', name: "Ocean" },
-              { region: "北一區", store: "美麗華", id: 'SA3322', name: "Gary" },
-              { region: "北一區", store: "美麗華", id: 'SA3346', name: "Allen" },
-              { region: "北一區", store: "阿波羅", id: 'SA3308', name: "Jane" },
               { region: "桃竹區", store: "新竹中正", id: 'SA3325', name: "Ben" },
-              { region: "桃竹區", store: "桃園統領", id: 'SA3352', name: "Levi" },
-              { region: "桃竹區", store: "竹北遠百", id: 'SA3355', name: "Tony" },
-              { region: "桃竹區", store: "苗栗尚順", id: 'SA3324', name: "Hao" },
-              { region: "中區", store: "台中中科", id: 'SA3280', name: "Putter" },
-              { region: "中區", store: "台中中科", id: 'SA3334', name: "Joe" },
               { region: "中區", store: "台中精誠", id: 'SA3333', name: "MOMO" },
               { region: "中區", store: "台中豐原", id: 'SA3344', name: "Austin" },
               { region: "南區", store: "高雄三多", id: 'SA3342', name: "Yi" },
@@ -1548,15 +1599,7 @@
             people: [
               { region: "北一區", store: "大葉高島屋", id: 'SA3345', name: "Pika" },
               { region: "北一區", store: "微風", id: 'SA3289', name: "Ocean" },
-              { region: "北一區", store: "美麗華", id: 'SA3322', name: "Gary" },
-              { region: "北一區", store: "美麗華", id: 'SA3346', name: "Allen" },
-              { region: "北一區", store: "阿波羅", id: 'SA3308', name: "Jane" },
               { region: "桃竹區", store: "新竹中正", id: 'SA3325', name: "Ben" },
-              { region: "桃竹區", store: "桃園統領", id: 'SA3352', name: "Levi" },
-              { region: "桃竹區", store: "竹北遠百", id: 'SA3355', name: "Tony" },
-              { region: "桃竹區", store: "苗栗尚順", id: 'SA3324', name: "Hao" },
-              { region: "中區", store: "台中中科", id: 'SA3280', name: "Putter" },
-              { region: "中區", store: "台中中科", id: 'SA3334', name: "Joe" },
               { region: "中區", store: "台中精誠", id: 'SA3333', name: "MOMO" },
               { region: "中區", store: "台中豐原", id: 'SA3344', name: "Austin" },
               { region: "南區", store: "高雄三多", id: 'SA3237', name: "Jerry" },
@@ -1568,14 +1611,7 @@
             people: [
               { region: "北一區", store: "大葉高島屋", id: 'SA3345', name: "Pika" },
               { region: "北一區", store: "微風", id: 'SA3289', name: "Ocean" },
-              { region: "北一區", store: "阿波羅", id: 'SA3308', name: "Jane" },
-              { region: "北二區", store: "板橋遠百", id: 'SA3301', name: "Yunwan" },
               { region: "桃竹區", store: "新竹中正", id: 'SA3325', name: "Ben" },
-              { region: "桃竹區", store: "桃園統領", id: 'SA3352', name: "Levi" },
-              { region: "桃竹區", store: "竹北遠百", id: 'SA3355', name: "Tony" },
-              { region: "桃竹區", store: "苗栗尚順", id: 'SA3324', name: "Hao" },
-              { region: "中區", store: "台中中科", id: 'SA3280', name: "Putter" },
-              { region: "中區", store: "台中中科", id: 'SA3334', name: "Joe" },
               { region: "中區", store: "台中精誠", id: 'SA3333', name: "MOMO" },
               { region: "中區", store: "台中豐原", id: 'SA3344', name: "Austin" },
               { region: "南區", store: "高雄三多", id: 'SA3342', name: "Yi" },
@@ -1592,29 +1628,35 @@
             prereqNote: "iOS 銷售技巧未完成",
             people: [
               { region: "北一區", store: "大葉高島屋", id: 'SA3276', name: "Steven", prereq: false },
-              { region: "北一區", store: "美麗華", id: 'SA2497', name: "Chou Yan", prereq: false },
-              { region: "北一區", store: "美麗華", id: 'SA2985', name: "Andrew", prereq: false },
-              { region: "北一區", store: "美麗華", id: 'SA3164', name: "Zoe", prereq: false },
+              { region: "北一區", store: "阿波羅", id: 'SA3307', name: "Kent", prereq: false },
               { region: "北一區", store: "阿波羅", id: 'SA3148', name: "Justin", prereq: false },
-              { region: "北二區", store: "新店裕隆城", id: 'SA3243', name: "Hsuan", prereq: false },
+              { region: "北一區", store: "美麗華", id: 'SA3164', name: "Zoe", prereq: false },
+              { region: "北一區", store: "美麗華", id: 'SA2985', name: "Andrew", prereq: false },
+              { region: "北一區", store: "美麗華", id: 'SA2497', name: "Chou Yan", prereq: false },
+              { region: "北一區", store: "微風", id: 'SA3337', name: "Chloe", prereq: false },
+              { region: "北二區", store: "板橋誠品", id: 'SA3313', name: "Ida", prereq: false },
               { region: "北二區", store: "板橋遠百", id: 'SA3150', name: "Emily", prereq: false },
               { region: "北二區", store: "花蓮", id: 'SA3004', name: "Yu", prereq: false },
+              { region: "北二區", store: "新店裕隆城", id: 'SA3243', name: "Hsuan", prereq: false },
               { region: "桃竹區", store: "中壢大江", id: 'SA3272', name: "Stewart", prereq: false },
-              { region: "桃竹區", store: "新竹遠百", id: 'SA3277', name: "Yu-Hung", prereq: false },
-              { region: "桃竹區", store: "新竹遠百", id: 'SA3315', name: "Kelvin", prereq: false },
+              { region: "桃竹區", store: "苗栗尚順", id: 'SA3310', name: "Tracy", prereq: false },
               { region: "桃竹區", store: "桃園統領", id: 'SA3269', name: "Yao-yao", prereq: true },
+              { region: "桃竹區", store: "新竹遠百", id: 'SA3315', name: "Kelvin", prereq: false },
+              { region: "桃竹區", store: "新竹遠百", id: 'SA3277', name: "Yu-Hung", prereq: false },
+              { region: "中區", store: "台中金典", id: 'SA3296', name: "Kelly", prereq: false },
+              { region: "中區", store: "台中金典", id: 'SA3097', name: "Tommy", prereq: true },
               { region: "中區", store: "台中精誠", id: 'SA3128', name: "Mira", prereq: false },
               { region: "中區", store: "台中豐原", id: 'SA3215', name: "Oreo", prereq: false },
-              { region: "中區", store: "台中金典", id: 'SA3097', name: "Tommy", prereq: true },
-              { region: "中區", store: "台中金典", id: 'SA3296', name: "Kelly", prereq: false },
+              { region: "中區", store: "台中麗寶", id: 'SA3327', name: "Ian", prereq: false },
               { region: "中區", store: "台中麗寶", id: 'SA3343', name: "Leo", prereq: true },
-              { region: "南區", store: "夢時代", id: 'SA3188', name: "Hong", prereq: false },
-              { region: "南區", store: "大億西門", id: 'SA3253', name: "Dian", prereq: false },
-              { region: "南區", store: "大億西門", id: 'SA3263', name: "Jeff", prereq: false },
               { region: "南區", store: "大億西門", id: 'SA3266', name: "Liam", prereq: false },
+              { region: "南區", store: "大億西門", id: 'SA3263', name: "Jeff", prereq: false },
+              { region: "南區", store: "大億西門", id: 'SA3253', name: "Dian", prereq: false },
               { region: "南區", store: "高雄岡山", id: 'SA3202', name: "Wayne", prereq: true },
-              { region: "校園店", store: "亞洲大學", id: 'SA3084', name: "Jerry", prereq: true },
+              { region: "南區", store: "夢時代", id: 'SA3188', name: "Hong", prereq: false },
+              { region: "校園店", store: "中興大學", id: 'SA3405', name: "Sandy", prereq: false },
               { region: "校園店", store: "成功大學", id: 'SA3019', name: "Feng", prereq: false },
+              { region: "校園店", store: "亞洲大學", id: 'SA3084', name: "Jerry", prereq: true },
               { region: "校園店", store: "海洋大學", id: 'SA3234', name: "Sharon", prereq: true },
               { region: "校園店", store: "臺灣大學", id: 'SA3275', name: "Patty", prereq: false },
             ]
@@ -1625,7 +1667,7 @@
             prereqNote: "Mac 銷售技巧未完成",
             people: [
               { region: "北一區", store: "微風", id: 'SA2391', name: "Nick", prereq: true },
-              { region: "桃竹區", store: "桃園台茂", id: 'SA3175', name: "William", prereq: true },
+              { region: "校園店", store: "中興大學", id: 'SA3405', name: "Sandy", prereq: false },
             ]
           },
         ]
@@ -1636,7 +1678,7 @@
 
     function renderRecommendations() {
       const view = document.getElementById('recommendView');
-      view.innerHTML = `<p class="rec-notice">以下名單由培訓記錄自動產出（2026/08/28 版本）。</p>`;
+      view.innerHTML = `<p class="rec-notice">以下名單由培訓記錄自動產出（2026/09/07 版本）。</p>`;
 
       Object.entries(RECOMMENDATIONS).forEach(([key, section], idx) => {
         const wrap = document.createElement('div');
